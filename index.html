@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
-  href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,700;8..60,800;8..60,900&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+  href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap"
   rel="stylesheet"
 />
 
@@ -91,11 +91,11 @@
   }
 
   .noscript-headline {
-    font-family: "Source Serif 4", Georgia, serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 800;
     font-size: clamp(2.5rem, 9vw, 6.5rem);
     line-height: 1.02;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
     color: var(--ink);
   }
 
@@ -138,7 +138,7 @@
     <h1 class="sr-only">Design for pioneers</h1>
     <canvas id="headline-canvas" aria-hidden="true"></canvas>
     <noscript>
-      <div class="noscript-headline">Design for<br />pioneers</div>
+      <div class="noscript-headline">Design for<br />Pioneers</div>
     </noscript>
   </div>
 
@@ -155,7 +155,7 @@
     "(prefers-reduced-motion: reduce)"
   ).matches;
 
-  var CHARS = "PURPLEDROP ";
+  var CHARS = "PURPLEDROP";
   var LINES = ["Design for", "Pioneers"];
 
   var dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -166,7 +166,8 @@
     cols = 0,
     rows = 0,
     mask = null,
-    cellOffsets = null;
+    cellOffsets = null,
+    rowSeqs = null;
   var time = 0;
   var rafId = null;
 
@@ -174,7 +175,7 @@
     var probe = document.createElement("canvas").getContext("2d");
     var fSize = cssHeight * 0.4;
     for (var i = 0; i < 24; i++) {
-      probe.font = '800 ' + fSize + 'px "Source Serif 4", Georgia, serif';
+      probe.font = '800 ' + fSize + 'px "Helvetica Neue", Helvetica, Arial, sans-serif';
       var maxLineWidth = 0;
       for (var j = 0; j < LINES.length; j++) {
         maxLineWidth = Math.max(maxLineWidth, probe.measureText(LINES[j]).width);
@@ -196,7 +197,7 @@
     octx.fillStyle = "#fff";
     octx.textAlign = "left";
     octx.textBaseline = "middle";
-    octx.font = '800 ' + fSize + 'px "Source Serif 4", Georgia, serif';
+    octx.font = '800 ' + fSize + 'px "Helvetica Neue", Helvetica, Arial, sans-serif';
     if ("letterSpacing" in octx) octx.letterSpacing = (-0.02 * fSize).toFixed(1) + "px";
 
     var lineHeight = fSize * 0.8;
@@ -228,7 +229,8 @@
     // capped small (6px) and packed tight so the grid resolves the
     // letterforms cleanly instead of blocking up
     charSize = Math.min(7, Math.max(3, Math.round(fontSize * 0.08)));
-    cellSize = Math.max(4, Math.round(charSize * 0.8));
+    if (width < 768) charSize = Math.max(2, Math.round(charSize * 0.6));
+    cellSize = Math.min(charSize, Math.max(2, Math.round(charSize * 0.85)));
     cols = Math.max(1, Math.ceil(width / cellSize));
     rows = Math.max(1, Math.ceil(height / cellSize));
 
@@ -254,15 +256,30 @@
           }
         }
         var avgAlpha = count > 0 ? sum / count : 0;
-        mask[r * cols + c] = avgAlpha > 45 ? 1 : 0;
+        mask[r * cols + c] = avgAlpha > 22 ? 1 : 0;
       }
     }
 
-    // random starting position per cell — breaks the diagonal banding
+    // Build per-row sequences: stream PURPLEDROP continuously but inject
+    // a single-cell space at ~12% of positions, chosen independently per
+    // row, so breaks land mid-word at unpredictable spots.
     var charCount = CHARS.length;
-    cellOffsets = new Uint32Array(cols * rows);
-    for (var i = 0; i < cellOffsets.length; i++) {
-      cellOffsets[i] = Math.floor(Math.random() * charCount);
+    var seqLen = Math.max(240, cols * 4);
+    rowSeqs = [];
+    cellOffsets = new Uint32Array(rows);
+    for (var i = 0; i < rows; i++) {
+      var seq = new Array(seqLen);
+      var ci = 0;
+      for (var j = 0; j < seqLen; j++) {
+        if (Math.random() < 0.05) {
+          seq[j] = null; // gap
+        } else {
+          seq[j] = CHARS[ci % charCount];
+          ci++;
+        }
+      }
+      rowSeqs.push(seq);
+      cellOffsets[i] = Math.floor(Math.random() * seqLen);
     }
 
     ctx.font = '600 ' + charSize + 'px "IBM Plex Mono", monospace';
@@ -273,7 +290,7 @@
   function draw() {
     ctx.clearRect(0, 0, width, height);
     var charCount = CHARS.length;
-    var scrollOffset = Math.floor(time * 5);
+    var scrollOffset = Math.floor(time * 8);
 
     for (var r = 0; r < rows; r++) {
       for (var c = 0; c < cols; c++) {
@@ -281,8 +298,10 @@
 
         var nx = cols > 1 ? (c / (cols - 1)) * 2 - 1 : 0; // -1..1 across width
 
-        var charIndex = (cellOffsets[r * cols + c] + scrollOffset) % charCount;
-        var ch = CHARS[charIndex];
+        var seq = rowSeqs[r];
+        var pos = (cellOffsets[r] + c + scrollOffset) % seq.length;
+        var ch = seq[pos];
+        if (!ch) continue; // gap — skip cell
 
         // horizontal gradient: #B9A4F7 (hsl 255,84%,81%) left → #8A85E5 (hsl 243,65%,71%) right
         var t = (nx + 1) / 2;
@@ -327,7 +346,6 @@
 
   if (document.fonts && document.fonts.load) {
     Promise.all([
-      document.fonts.load('800 100px "Source Serif 4"'),
       document.fonts.load('400 16px "IBM Plex Mono"')
     ])
       .then(start)
