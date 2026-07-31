@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Studio — Design for pioneers</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,700;8..60,800;8..60,900&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+
+<style>
+  :root {
+    --bg: #ffffff;
+    --ink: #1a1733;
+    --muted: #767e91;
+    --line: rgba(0, 0, 0, 0.1);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: clamp(0.7rem, 1.4vw, 0.85rem);
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0;
+    padding-bottom: 0.35em;
+    border-bottom: 1px solid var(--line);
+    animation: fade-up 0.6s cubic-bezier(0.19, 1, 0.22, 1) both;
+  }
+
+  .headline-stage {
+    position: relative;
+    width: 100%;
+    height: clamp(280px, 72vh, 900px);
+    animation: slide-up 0.6s cubic-bezier(0.19, 1, 0.22, 1) both;
+    animation-delay: 120ms;
+  }
+
+  .headline-stage canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    opacity: 0;
+    transition: opacity 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  /* visually-hidden but accessible heading */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .noscript-headline {
+    font-family: "Source Serif 4", Georgia, serif;
+    font-weight: 800;
+    font-size: clamp(2.5rem, 9vw, 6.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  .subtext {
+    max-width: 40ch;
+    margin: 0;
+    font-size: clamp(0.85rem, 1.6vw, 1rem);
+    line-height: 1.6;
+    color: var(--muted);
+    animation: fade-up 0.6s cubic-bezier(0.19, 1, 0.22, 1) both;
+    animation-delay: 360ms;
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slide-up {
+    from { transform: translateY(6px); }
+    to   { transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .eyebrow,
+    .headline-stage,
+    .subtext {
+      animation: none;
+    }
+    #headline-canvas {
+      transition: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+<main class="hero">
+  <div class="headline-stage">
+    <h1 class="sr-only">Design for pioneers</h1>
+    <canvas id="headline-canvas" aria-hidden="true"></canvas>
+    <noscript>
+      <div class="noscript-headline">Design for<br />pioneers</div>
+    </noscript>
+  </div>
+
+</main>
+
+<script>
+(function () {
+  var canvas = document.getElementById("headline-canvas");
+  if (!canvas || !canvas.getContext) return;
+  var ctx = canvas.getContext("2d");
+  var stage = canvas.parentElement;
+
+  var reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  var CHARS = "PURPLEDROP ";
+  var LINES = ["Design for", "Pioneers"];
+
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var width = 0,
+    height = 0,
+    cellSize = 0,
+    charSize = 0,
+    cols = 0,
+    rows = 0,
+    mask = null,
+    cellOffsets = null;
+  var time = 0;
+  var rafId = null;
+
+  function fitFontSize(cssWidth, cssHeight) {
+    var probe = document.createElement("canvas").getContext("2d");
+    var fSize = cssHeight * 0.4;
+    for (var i = 0; i < 24; i++) {
+      probe.font = '800 ' + fSize + 'px "Source Serif 4", Georgia, serif';
+      var maxLineWidth = 0;
+      for (var j = 0; j < LINES.length; j++) {
+        maxLineWidth = Math.max(maxLineWidth, probe.measureText(LINES[j]).width);
+      }
+      if (maxLineWidth <= cssWidth * 0.97) break;
+      fSize *= 0.94;
+    }
+    return fSize;
+  }
+
+  function buildMask(cssWidth, cssHeight, fSize) {
+    var off = document.createElement("canvas");
+    off.width = cssWidth;
+    off.height = cssHeight;
+    var octx = off.getContext("2d");
+    // leave the background transparent (alpha 0) so glyph coverage
+    // can be read from the alpha channel alone
+    octx.clearRect(0, 0, cssWidth, cssHeight);
+    octx.fillStyle = "#fff";
+    octx.textAlign = "left";
+    octx.textBaseline = "middle";
+    octx.font = '800 ' + fSize + 'px "Source Serif 4", Georgia, serif';
+    if ("letterSpacing" in octx) octx.letterSpacing = (-0.02 * fSize).toFixed(1) + "px";
+
+    var lineHeight = fSize * 0.8;
+    var totalHeight = lineHeight * LINES.length;
+    var y = cssHeight / 2 - totalHeight / 2 + lineHeight / 2;
+    for (var i = 0; i < LINES.length; i++) {
+      octx.fillText(LINES[i], 0, y);
+      y += lineHeight;
+    }
+    return octx.getImageData(0, 0, cssWidth, cssHeight);
+  }
+
+  function setup() {
+    var rect = stage.getBoundingClientRect();
+    width = Math.max(1, Math.round(rect.width));
+    height = Math.max(1, Math.round(rect.height));
+
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    canvas.style.width = width + "px";
+    canvas.style.height = height + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    var fontSize = fitFontSize(width, height);
+
+    // size the grid off the fitted letter size (not raw viewport width) so
+    // the character-to-stroke-width ratio stays constant at every screen
+    // size instead of going coarse on small viewports; characters are
+    // capped small (6px) and packed tight so the grid resolves the
+    // letterforms cleanly instead of blocking up
+    charSize = Math.min(7, Math.max(3, Math.round(fontSize * 0.08)));
+    cellSize = Math.max(4, Math.round(charSize * 0.8));
+    cols = Math.max(1, Math.ceil(width / cellSize));
+    rows = Math.max(1, Math.ceil(height / cellSize));
+
+    var imgData = buildMask(width, height, fontSize);
+
+    // average alpha coverage over each cell's pixel block (not a single
+    // sample point) so thin serif strokes don't fall through the grid
+    mask = new Uint8Array(cols * rows);
+    var pixels = imgData.data;
+    for (var r = 0; r < rows; r++) {
+      var y0 = r * cellSize;
+      var y1 = Math.min(height, y0 + cellSize);
+      for (var c = 0; c < cols; c++) {
+        var x0 = c * cellSize;
+        var x1 = Math.min(width, x0 + cellSize);
+        var sum = 0,
+          count = 0;
+        for (var y = y0; y < y1; y++) {
+          var rowOffset = y * width;
+          for (var x = x0; x < x1; x++) {
+            sum += pixels[(rowOffset + x) * 4 + 3];
+            count++;
+          }
+        }
+        var avgAlpha = count > 0 ? sum / count : 0;
+        mask[r * cols + c] = avgAlpha > 45 ? 1 : 0;
+      }
+    }
+
+    // random starting position per cell — breaks the diagonal banding
+    var charCount = CHARS.length;
+    cellOffsets = new Uint32Array(cols * rows);
+    for (var i = 0; i < cellOffsets.length; i++) {
+      cellOffsets[i] = Math.floor(Math.random() * charCount);
+    }
+
+    ctx.font = '600 ' + charSize + 'px "IBM Plex Mono", monospace';
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, width, height);
+    var charCount = CHARS.length;
+    var scrollOffset = Math.floor(time * 5);
+
+    for (var r = 0; r < rows; r++) {
+      for (var c = 0; c < cols; c++) {
+        if (!mask[r * cols + c]) continue;
+
+        var nx = cols > 1 ? (c / (cols - 1)) * 2 - 1 : 0; // -1..1 across width
+
+        var charIndex = (cellOffsets[r * cols + c] + scrollOffset) % charCount;
+        var ch = CHARS[charIndex];
+
+        // horizontal gradient: #B9A4F7 (hsl 255,84%,81%) left → #8A85E5 (hsl 243,65%,71%) right
+        var t = (nx + 1) / 2;
+        var hue = 255 - t * 12;
+        var sat = 84 - t * 19;
+        var light = 81 - t * 10;
+        var color = "hsl(" + hue + " " + sat + "% " + light + "% / 1)";
+
+        ctx.fillStyle = color;
+        ctx.fillText(ch, c * cellSize + cellSize / 2, r * cellSize + cellSize / 2);
+      }
+    }
+  }
+
+  function frame() {
+    time += 0.01;
+    draw();
+    rafId = requestAnimationFrame(frame);
+  }
+
+  function start() {
+    setup();
+    draw();
+    canvas.style.opacity = "1";
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+    if (!reduceMotion) {
+      rafId = requestAnimationFrame(frame);
+    }
+  }
+
+  var resizeTimer = null;
+  window.addEventListener("resize", function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      start();
+    }, 150);
+  });
+
+  if (document.fonts && document.fonts.load) {
+    Promise.all([
+      document.fonts.load('800 100px "Source Serif 4"'),
+      document.fonts.load('400 16px "IBM Plex Mono"')
+    ])
+      .then(start)
+      .catch(start);
+  } else {
+    start();
+  }
+})();
+</script>
+
+</body>
+</html>
