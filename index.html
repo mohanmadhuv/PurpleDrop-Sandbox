@@ -171,6 +171,16 @@
   var time = 0;
   var rafId = null;
 
+  // Magnetic repulsion state — two shared globals drive all cells in lockstep
+  var mouseX = null, mouseY = null;
+  var smoothMouseX = null, smoothMouseY = null;
+  var fieldPresence = 0;   // 0 = no field, 1 = full field
+  var REPEL_RADIUS = 120;  // influence radius in CSS px
+  var MAX_PUSH = 0;        // set in setup() as 2.5 × cellSize
+  var MOUSE_LERP = 0.18;   // how fast smooth cursor tracks real cursor
+  var PRESENCE_IN = 0.12;  // field build rate when cursor is over canvas
+  var PRESENCE_OUT = 0.86; // field decay multiplier per frame when cursor leaves
+
   function fitFontSize(cssWidth, cssHeight) {
     var probe = document.createElement("canvas").getContext("2d");
     var fSize = cssHeight * 0.4;
@@ -285,6 +295,28 @@
     ctx.font = '600 ' + charSize + 'px "IBM Plex Mono", monospace';
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
+
+    MAX_PUSH = cellSize * 2.5;
+  }
+
+  function updatePhysics() {
+    if (mouseX !== null) {
+      if (smoothMouseX === null) {
+        smoothMouseX = mouseX;
+        smoothMouseY = mouseY;
+      } else {
+        smoothMouseX += (mouseX - smoothMouseX) * MOUSE_LERP;
+        smoothMouseY += (mouseY - smoothMouseY) * MOUSE_LERP;
+      }
+      fieldPresence += (1 - fieldPresence) * PRESENCE_IN;
+    } else {
+      fieldPresence *= PRESENCE_OUT;
+      if (fieldPresence < 0.001) {
+        fieldPresence = 0;
+        smoothMouseX = null;
+        smoothMouseY = null;
+      }
+    }
   }
 
   function draw() {
@@ -310,14 +342,31 @@
         var light = 81 - t * 10;
         var color = "hsl(" + hue + " " + sat + "% " + light + "% / 1)";
 
+        var ox = 0, oy = 0;
+        if (smoothMouseX !== null && fieldPresence > 0.001) {
+          var cx = c * cellSize + cellSize / 2;
+          var cy = r * cellSize + cellSize / 2;
+          var dx = cx - smoothMouseX;
+          var dy = cy - smoothMouseY;
+          var dist2 = dx * dx + dy * dy;
+          var r2 = REPEL_RADIUS * REPEL_RADIUS;
+          if (dist2 < r2 && dist2 > 0.0001) {
+            var dist = Math.sqrt(dist2);
+            var norm = 1 - dist / REPEL_RADIUS;
+            var strength = norm * norm * MAX_PUSH * fieldPresence;
+            ox = (dx / dist) * strength;
+            oy = (dy / dist) * strength;
+          }
+        }
         ctx.fillStyle = color;
-        ctx.fillText(ch, c * cellSize + cellSize / 2, r * cellSize + cellSize / 2);
+        ctx.fillText(ch, c * cellSize + cellSize / 2 + ox, r * cellSize + cellSize / 2 + oy);
       }
     }
   }
 
   function frame() {
     time += 0.01;
+    updatePhysics();
     draw();
     rafId = requestAnimationFrame(frame);
   }
@@ -342,6 +391,16 @@
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       start();
     }, 150);
+  });
+
+  canvas.addEventListener("mousemove", function (e) {
+    var rect = canvas.getBoundingClientRect();
+    mouseX = e.clientX - rect.left;
+    mouseY = e.clientY - rect.top;
+  });
+  canvas.addEventListener("mouseleave", function () {
+    mouseX = null;
+    mouseY = null;
   });
 
   if (document.fonts && document.fonts.load) {
