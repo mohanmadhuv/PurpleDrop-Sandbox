@@ -129,10 +129,94 @@
       transition: none;
     }
   }
+
+  /* ── Concept pages ── */
+  .concept-page {
+    display: none;
+    min-height: 100svh;
+  }
+  .concept-page.active {
+    display: block;
+  }
+
+  /* ── Tab switcher ── */
+  .concept-switcher {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    background: #1c1c1f;
+    border-radius: 999px;
+    padding: 4px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.35), 0 1px 4px rgba(0,0,0,0.2);
+    z-index: 9999;
+    user-select: none;
+  }
+
+  .cs-tab {
+    border: none;
+    background: transparent;
+    color: #9e9eab;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.01em;
+    padding: 6px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: color 0.18s ease, background 0.18s ease;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  .cs-tab:hover {
+    color: #e2e2e8;
+  }
+
+  .cs-tab.cs-active {
+    background: #e8e8ed;
+    color: #1c1c1f;
+  }
+
+  .cs-divider {
+    width: 1px;
+    height: 18px;
+    background: rgba(255,255,255,0.1);
+    margin: 0 2px;
+    flex-shrink: 0;
+  }
+
+  .cs-refresh {
+    border: none;
+    background: transparent;
+    color: #9e9eab;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 1rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    transition: color 0.18s ease, transform 0.3s ease;
+  }
+
+  .cs-refresh:hover {
+    color: #e2e2e8;
+    transform: rotate(30deg);
+  }
 </style>
 </head>
 <body>
 
+<!-- Concept 1: blank -->
+<div id="page-1" class="concept-page"></div>
+
+<!-- Concept 2: blank -->
+<div id="page-2" class="concept-page"></div>
+
+<!-- Concept 3: current design -->
+<div id="page-3" class="concept-page active">
 <main class="hero">
   <div class="headline-stage">
     <h1 class="sr-only">Design for pioneers</h1>
@@ -143,6 +227,42 @@
   </div>
 
 </main>
+</div><!-- /page-3 -->
+
+<!-- Tab switcher -->
+<nav class="concept-switcher" aria-label="Concept switcher">
+  <button class="cs-tab" data-page="1">Concept 1</button>
+  <button class="cs-tab" data-page="2">Concept 2</button>
+  <button class="cs-tab cs-active" data-page="3">Concept 3</button>
+  <div class="cs-divider"></div>
+  <button class="cs-refresh" id="cs-refresh" title="Reload concept" aria-label="Reload">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M13.65 2.35A8 8 0 1 0 15 8h-2a6 6 0 1 1-1.76-4.24L9 6h6V0l-1.35 2.35z" fill="currentColor"/>
+    </svg>
+  </button>
+</nav>
+
+<script>
+(function () {
+  var tabs = document.querySelectorAll(".cs-tab");
+  var pages = document.querySelectorAll(".concept-page");
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener("click", function () {
+      var target = tab.getAttribute("data-page");
+      tabs.forEach(function (t) { t.classList.remove("cs-active"); });
+      tab.classList.add("cs-active");
+      pages.forEach(function (p) {
+        p.classList.toggle("active", p.id === "page-" + target);
+      });
+    });
+  });
+
+  document.getElementById("cs-refresh").addEventListener("click", function () {
+    window.location.reload();
+  });
+})();
+</script>
 
 <script>
 (function () {
