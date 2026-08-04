@@ -209,14 +209,965 @@
 </head>
 <body>
 
-<!-- Concept 1: blank -->
-<div id="page-1" class="concept-page"></div>
+<!-- Concept 1: Metalab-inspired — PurpleDrop -->
+<div id="page-1" class="concept-page active">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+#page-1 {
+  position: relative;
+  height: 100svh;
+  overflow: hidden;
+  background: #08060c;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
 
-<!-- Concept 2: blank -->
-<div id="page-2" class="concept-page"></div>
+#p1-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ── Client hover background ── */
+#p1-hover-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.19,1,0.22,1);
+  pointer-events: none;
+}
+
+/* ── Nav ── */
+#p1-nav {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 24px 28px;
+  z-index: 2;
+}
+
+/* ── Persistent centered logo (home + case study) ── */
+#p1-brand,
+.p1cs-logo {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 24px;
+  width: auto;
+  opacity: 0.9;
+  display: block;
+  z-index: 3;
+}
+
+#p1-meta  { font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.32); letter-spacing: 0.05em; font-variant-numeric: tabular-nums; }
+
+/* ── Left pills ── */
+#p1-pills {
+  position: absolute;
+  left: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  z-index: 2;
+}
+
+.p1-pill {
+  display: block;
+  border: 1px solid rgba(255,255,255,0.13);
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.55);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 7px 15px;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+  text-align: left;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.p1-pill:hover {
+  background: rgba(255,255,255,0.11);
+  color: rgba(255,255,255,0.92);
+  border-color: rgba(255,255,255,0.26);
+}
+
+/* ── Centered hero block ── */
+#p1-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  text-align: center;
+  pointer-events: none;
+}
+
+#p1-hl {
+  margin: 0;
+  font-family: "Instrument Serif", Georgia, "Times New Roman", serif;
+  font-size: clamp(3.8rem, 9.5vw, 8.5rem);
+  font-weight: 400;
+  line-height: 1.0;
+  letter-spacing: -0.025em;
+  color: #fff;
+  white-space: nowrap;
+  transition: opacity 0.14s ease;
+}
+
+#p1-blurb {
+  margin: 0;
+  max-width: 360px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.42);
+  transition: opacity 0.14s ease;
+}
+
+/* ── Scroll dot ── */
+#p1-dot {
+  position: absolute;
+  right: 34px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.45);
+  z-index: 2;
+}
+
+/* ── Case study overlay ── */
+#p1-case {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: #08060c;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(100%);
+  transition: transform 0.55s cubic-bezier(0.19,1,0.22,1), opacity 0.4s ease;
+}
+#p1-case.p1cs-open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.p1cs-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 96px 28px 120px;
+}
+
+.p1cs-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 24px 28px;
+  z-index: 2;
+  background: linear-gradient(#08060c 45%, transparent);
+}
+.p1cs-back {
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.8);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 7px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background 0.18s, color 0.18s;
+}
+.p1cs-back:hover { background: rgba(255,255,255,0.11); color: #fff; }
+
+.p1cs-eyebrow {
+  margin: 0 0 18px;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+.p1cs-title {
+  margin: 0 0 14px;
+  font-family: "Instrument Serif", Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  font-size: clamp(2.6rem, 6vw, 4.6rem);
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+.p1cs-subtitle {
+  margin: 0 0 48px;
+  max-width: 46ch;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: rgba(255,255,255,0.5);
+}
+
+.p1cs-hero {
+  position: relative;
+  height: clamp(260px, 42vw, 480px);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 56px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.p1cs-hero-grad {
+  background: radial-gradient(120% 120% at 30% 20%, rgba(155,95,245,0.55), rgba(75,28,175,0.35) 45%, #0d0813 80%);
+}
+.p1cs-hero-mark {
+  font-family: "Instrument Serif", Georgia, "Times New Roman", serif;
+  font-size: clamp(3rem, 9vw, 6.5rem);
+  color: rgba(255,255,255,0.92);
+  letter-spacing: -0.02em;
+}
+
+.p1cs-meta-row {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 40px;
+  padding: 32px 0;
+  margin-bottom: 40px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.p1cs-intro { font-size: 15px; font-weight: 400; line-height: 1.7; color: rgba(255,255,255,0.68); margin: 0; }
+.p1cs-services-label { margin: 0 0 10px; font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+.p1cs-services ul { margin: 0; padding: 0; list-style: none; }
+.p1cs-services li { font-size: 14px; color: rgba(255,255,255,0.6); padding: 8px 0; border-top: 1px solid rgba(255,255,255,0.07); }
+.p1cs-services li:first-child { border-top: none; }
+
+.p1cs-section { margin-bottom: 44px; }
+.p1cs-section h3 { margin: 0 0 14px; font-size: 13px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+.p1cs-section p { margin: 0; max-width: 62ch; font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.68); }
+
+.p1cs-quote {
+  margin: 0 0 44px;
+  padding: 8px 0 8px 24px;
+  border-left: 2px solid rgba(255,255,255,0.18);
+}
+.p1cs-quote p {
+  margin: 0 0 12px;
+  max-width: 56ch;
+  font-family: "Instrument Serif", Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-size: clamp(1.3rem, 2.6vw, 1.7rem);
+  line-height: 1.4;
+  color: rgba(255,255,255,0.88);
+}
+.p1cs-quote cite {
+  font-style: normal;
+  font-size: 13px;
+  color: rgba(255,255,255,0.45);
+}
+
+.p1cs-highlight {
+  margin: 0 0 8px;
+  padding: 44px 32px;
+  background: linear-gradient(135deg, #4b1caf, #7637d7);
+  border-radius: 14px;
+}
+.p1cs-highlight-stat { font-family: "Instrument Serif", Georgia, "Times New Roman", serif; font-size: clamp(2.4rem, 6vw, 3.6rem); color: #fff; margin: 0 0 8px; line-height: 1; }
+.p1cs-highlight-label { margin: 0; font-size: 14px; color: rgba(255,255,255,0.82); max-width: 42ch; }
+.p1cs-highlight-note { font-family: "Instrument Serif", Georgia, "Times New Roman", serif; font-style: italic; font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.35; color: #fff; margin: 0; max-width: 34ch; }
+
+.p1cs-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-top: 40px;
+  margin-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.p1cs-next {
+  border: none;
+  background: none;
+  color: rgba(255,255,255,0.55);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.15s;
+}
+.p1cs-next:hover { color: #fff; }
+.p1cs-next span { color: #fff; }
+
+@media (max-width: 620px) {
+  .p1cs-meta-row { grid-template-columns: 1fr; }
+}
+</style>
+
+<!-- Background -->
+<canvas id="p1-canvas" aria-hidden="true"></canvas>
+<div id="p1-hover-bg" aria-hidden="true"></div>
+
+<!-- Nav -->
+<header id="p1-nav">
+  <img id="p1-brand" src="assets/logo-mark.png" alt="PurpleDrop" />
+  <span id="p1-meta">NL</span>
+</header>
+
+<!-- Left client pills -->
+<nav id="p1-pills" aria-label="Portfolio">
+  <button class="p1-pill" data-client="porsche">Porsche</button>
+  <button class="p1-pill" data-client="adidas">Adidas</button>
+  <button class="p1-pill" data-client="liveflow">LiveFlow</button>
+  <button class="p1-pill" data-client="aware">AWARE</button>
+  <button class="p1-pill" data-client="pratilipi">Pratilipi</button>
+</nav>
+
+<!-- Centered hero block -->
+<div id="p1-center">
+  <h1 id="p1-hl">Design for<br>Pioneers</h1>
+  <p id="p1-blurb">We design products and brands for ambitious founders and business leaders — people out to make a change. Clients include AI&#8209;native companies in Law, HR, Accounting, and more.</p>
+</div>
+
+<!-- Scroll indicator -->
+<div id="p1-dot" aria-hidden="true"></div>
+
+<!-- Case study overlay -->
+<div id="p1-case" role="dialog" aria-modal="true" aria-label="Case study">
+  <div class="p1cs-inner">
+    <div class="p1cs-nav">
+      <button class="p1cs-back" id="p1cs-back">&larr; Back</button>
+      <img class="p1cs-logo" src="assets/logo-mark.png" alt="PurpleDrop" />
+    </div>
+
+    <p class="p1cs-eyebrow" id="p1cs-eyebrow"></p>
+    <h2 class="p1cs-title" id="p1cs-title"></h2>
+    <p class="p1cs-subtitle" id="p1cs-subtitle"></p>
+
+    <div class="p1cs-hero" id="p1cs-hero"></div>
+
+    <div class="p1cs-meta-row">
+      <p class="p1cs-intro" id="p1cs-intro"></p>
+      <div class="p1cs-services">
+        <p class="p1cs-services-label">Services</p>
+        <ul id="p1cs-services"></ul>
+      </div>
+    </div>
+
+    <div id="p1cs-sections"></div>
+
+    <div class="p1cs-highlight" id="p1cs-highlight"></div>
+
+    <div class="p1cs-footer">
+      <button class="p1cs-next" id="p1cs-next">Next &mdash; <span id="p1cs-next-name"></span> &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  /* ── Animated background orbs ── */
+  var cv = document.getElementById('p1-canvas');
+  var cx = cv.getContext('2d');
+  var W, H;
+
+  function resize() {
+    W = cv.width  = cv.offsetWidth;
+    H = cv.height = cv.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', function () { resize(); });
+
+  var orbs = [
+    { bx: 0.72, by: 0.20, r: 0.60, s: 0.00017, ph: 0.0,  c: [118, 55, 215] },
+    { bx: 0.25, by: 0.75, r: 0.48, s: 0.00013, ph: 2.1,  c: [75,  28, 175] },
+    { bx: 0.85, by: 0.60, r: 0.32, s: 0.00021, ph: 4.3,  c: [155, 95, 245] },
+    { bx: 0.15, by: 0.30, r: 0.28, s: 0.00015, ph: 1.4,  c: [55,  18, 140] },
+  ];
+
+  var prev = performance.now();
+  var t = 0;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function renderBg() {
+    var now = performance.now();
+    t += (now - prev) * 0.001;
+    prev = now;
+
+    cx.fillStyle = '#08060c';
+    cx.fillRect(0, 0, W, H);
+
+    orbs.forEach(function (o) {
+      var x = (o.bx + Math.sin(t * o.s * 1000 + o.ph) * 0.09) * W;
+      var y = (o.by + Math.cos(t * o.s * 800  + o.ph) * 0.08) * H;
+      var rr = o.r * Math.min(W, H);
+      var g = cx.createRadialGradient(x, y, 0, x, y, rr);
+      var c = o.c;
+      g.addColorStop(0,   'rgba('+c[0]+','+c[1]+','+c[2]+',0.32)');
+      g.addColorStop(0.5, 'rgba('+c[0]+','+c[1]+','+c[2]+',0.10)');
+      g.addColorStop(1,   'rgba('+c[0]+','+c[1]+','+c[2]+',0)');
+      cx.fillStyle = g;
+      cx.fillRect(0, 0, W, H);
+    });
+
+    if (!reduced) requestAnimationFrame(renderBg);
+  }
+
+  renderBg();
+
+  /* ── Clock ── */
+  var metaEl = document.getElementById('p1-meta');
+  function tick() {
+    var d = new Date();
+    var h = d.getHours(), m = d.getMinutes();
+    var ap = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    metaEl.textContent = 'NL  ' + h + ':' + String(m).padStart(2, '0') + ' ' + ap;
+  }
+  tick();
+  setInterval(tick, 60000);
+
+  /* ── Pill filter + hover headline swap ── */
+  var pills = document.querySelectorAll('#page-1 .p1-pill');
+  var hlEl = document.getElementById('p1-hl');
+  var blurbEl = document.getElementById('p1-blurb');
+  var defaultHL = hlEl.innerHTML;
+  var defaultBlurb = blurbEl.innerHTML;
+
+  var CLIENT_ORDER = ['porsche', 'adidas', 'liveflow', 'aware', 'pratilipi'];
+
+  var CLIENT_COPY = {
+    porsche: {
+      hl: 'Porsche',
+      blurb: 'We reimagined Porsche’s digital configurator, turning a complex build process into an experience as considered as the cars themselves.',
+      bg: 'assets/porsche.avif',
+      eyebrow: 'Automotive · Digital Experience',
+      subtitle: 'Reimagining the digital configurator for a brand built on craft.',
+      services: ['Product Design', 'UX Strategy', 'Design Systems'],
+      intro: 'Porsche came to us with a configurator experience that felt at odds with the precision of the cars themselves — a multi-step process that buried decisions in dense forms and inconsistent visual language.',
+      hero: { type: 'image', src: 'assets/porsche.avif' },
+      sections: [
+        { heading: 'The approach', body: 'We rebuilt the configurator around a single continuous canvas, letting customers see every change to their build in real time instead of jumping between static preview screens.' },
+        { heading: 'The outcome', body: 'Fewer steps, clearer trade-offs, and a build experience that finally feels as considered as the cars themselves.' }
+      ],
+      highlight: { type: 'note', text: 'A build experience as considered as the cars themselves.' }
+    },
+    adidas: {
+      hl: 'Adidas',
+      blurb: 'We sharpened how new product stories launch across Adidas’ digital channels — faster to ship, sharper to look at, built to move at the brand’s pace.',
+      bg: 'assets/adidas.webp',
+      eyebrow: 'Sportswear · Brand &amp; Digital',
+      subtitle: 'Sharpening how new product stories launch across digital.',
+      services: ['Brand Design', 'Digital Design', 'Design Systems'],
+      intro: 'Adidas needed new product stories to launch faster across digital without losing the sharpness the brand is known for — a system, not a one-off campaign.',
+      hero: { type: 'image', src: 'assets/adidas.webp' },
+      sections: [
+        { heading: 'The approach', body: 'We built a modular launch system — templated layouts, motion, and type rules that let smaller teams ship on-brand product drops without waiting on a full campaign build.' },
+        { heading: 'The outcome', body: 'Faster to ship, sharper to look at, and consistent across every market the system touched.' }
+      ],
+      highlight: { type: 'note', text: 'Faster to ship, sharper to look at, built to move at the brand’s pace.' }
+    },
+    liveflow: {
+      hl: 'LiveFlow',
+      blurb: 'We rebuilt LiveFlow’s Consolidation UI, making financial reporting 20x faster — “exactly what customers had been asking for.”',
+      bg: 'assets/liveflow.avif',
+      eyebrow: 'B2B · Finance · Series A',
+      subtitle: 'Redesigning the Consolidation UI finance teams live in every day.',
+      services: ['UX Design', 'Interaction Design', 'Design Systems'],
+      intro: 'LiveFlow helps finance teams consolidate multi-entity P&amp;L, balance sheets, and cash flow reports in real time. We were brought in to redesign their core Consolidation UI.',
+      hero: { type: 'image', src: 'assets/liveflow.avif' },
+      sections: [
+        { heading: 'The problem', body: 'Finance teams were spending hours every month stitching together spreadsheets from multiple entities. We audited user sessions and found 80% of the friction came from three patterns: slow column comparison, unclear data hierarchy, and no way to quickly filter by entity.' },
+        { heading: 'Re-building interactions', body: 'We rebuilt interactions to make users 20x faster. Every click path was mapped and reduced, data density increased without sacrificing legibility, and hierarchy made explicit through type weight and color.' },
+        { type: 'quote', text: '“The feedback rolling in on the new Consolidation UI has been phenomenal. It’s faster, cleaner and exactly what the customers have been asking for.”', author: 'Lasse Kalkar, CEO, LiveFlow' }
+      ],
+      highlight: { type: 'stat', value: '20x', label: 'Faster column comparison and reporting for finance teams.' }
+    },
+    aware: {
+      hl: 'AWARE&trade;',
+      blurb: 'We built AWARE&trade;’s brand identity from strategy through visual system, aligning every touchpoint around trust and traceability.',
+      bg: 'assets/aware.webp',
+      eyebrow: 'B2B · Textiles · Strategy',
+      subtitle: 'A bold new brand identity for a data-driven textile traceability platform.',
+      services: ['Brand Strategy', 'Identity Design', 'Art Direction'],
+      intro: 'AWARE&trade; is a data-driven textile traceability platform based in Amsterdam. They came to us at a pivotal moment — a new strategic direction needed a new identity to match.',
+      hero: { type: 'image', src: 'assets/aware.webp' },
+      sections: [
+        { heading: 'Strategic foundation', body: 'Before any visual work, we ran a structured brand strategy process — positioning workshops, competitive mapping, and archetype exploration to get to the core of AWARE’s identity.' },
+        { heading: 'Visual identity', body: 'The identity system translates rigour and boldness into a visual language: clean data structures paired with confident, high-contrast typography and a neutral palette with a single assertive accent.' },
+        { type: 'quote', text: '“Working with Gaurav on AWARE&trade;’s rebrand was one of the most valuable creative processes I’ve been through.”', author: 'Maaike Orta, Marketing Manager, AWARE&trade;' }
+      ],
+      highlight: { type: 'note', text: 'Every touchpoint — from deck templates to the product UI — brought into alignment with the new brand.' }
+    },
+    pratilipi: {
+      hl: 'Pratilipi',
+      blurb: 'As the first design hire, we built Pratilipi’s design foundations from scratch — now home to millions of readers, rated 4.7 stars across 71,705+ ratings.',
+      bg: 'assets/pratilipi.webp',
+      eyebrow: 'Consumer · Content · Series A',
+      subtitle: 'Building the design foundations for India’s largest storytelling platform.',
+      services: ['Product Design', 'Design Systems', '0→1 Design'],
+      intro: 'Pratilipi is India’s largest vernacular storytelling platform, with millions of readers and writers across a dozen languages. We joined as the first design team on the product.',
+      hero: { type: 'image', src: 'assets/pratilipi.webp' },
+      sections: [
+        { heading: 'Laying the foundation', body: 'As the first designer, the challenge wasn’t just designing screens — it was establishing how design would work inside the company: principles, processes, and a shared visual language that could scale.' },
+        { heading: 'Design system', body: 'We built a lightweight design system accommodating 12+ Indian languages, each with different script widths, line heights, and reading conventions — language-agnostic by design.' },
+        { type: 'quote', text: '“As the first designer on the Pratilipi team, Gaurav laid the foundations of how millions of users would discover, create and consume content on the Pratilipi App.”', author: 'Ranjeet Pratap Singh, CEO, Pratilipi' }
+      ],
+      highlight: { type: 'stat', value: '4.7★', label: '71,705+ ratings across the Pratilipi app.' }
+    }
+  };
+
+  var swapTimer;
+  function swapHero(hl, blurb) {
+    clearTimeout(swapTimer);
+    hlEl.style.opacity = 0;
+    blurbEl.style.opacity = 0;
+    swapTimer = setTimeout(function () {
+      hlEl.innerHTML = hl;
+      blurbEl.innerHTML = blurb;
+      hlEl.style.opacity = 1;
+      blurbEl.style.opacity = 1;
+    }, 140);
+  }
+
+  var hoverBg = document.getElementById('p1-hover-bg');
+  function setHoverBg(src) {
+    if (src) {
+      hoverBg.style.backgroundImage = 'linear-gradient(180deg, rgba(8,6,12,0.55), rgba(8,6,12,0.25) 45%, rgba(8,6,12,0.88)), url(' + src + ')';
+      hoverBg.style.opacity = 1;
+    } else {
+      hoverBg.style.opacity = 0;
+    }
+  }
+
+  pills.forEach(function (pill) {
+    pill.addEventListener('mouseenter', function () {
+      var data = CLIENT_COPY[pill.dataset.client];
+      if (data) swapHero(data.hl, data.blurb);
+      setHoverBg(data && data.bg);
+    });
+    pill.addEventListener('mouseleave', function () {
+      swapHero(defaultHL, defaultBlurb);
+      setHoverBg(null);
+    });
+    pill.addEventListener('click', function () {
+      openCaseStudy(pill.dataset.client);
+    });
+  });
+
+  /* ── Case study overlay ── */
+  var caseEl = document.getElementById('p1-case');
+  var csEyebrow = document.getElementById('p1cs-eyebrow');
+  var csTitle = document.getElementById('p1cs-title');
+  var csSubtitle = document.getElementById('p1cs-subtitle');
+  var csHero = document.getElementById('p1cs-hero');
+  var csIntro = document.getElementById('p1cs-intro');
+  var csServices = document.getElementById('p1cs-services');
+  var csSections = document.getElementById('p1cs-sections');
+  var csHighlight = document.getElementById('p1cs-highlight');
+  var csNextName = document.getElementById('p1cs-next-name');
+
+  function renderCaseStudy(key) {
+    var data = CLIENT_COPY[key];
+    if (!data) return;
+
+    caseEl.dataset.client = key;
+    csEyebrow.innerHTML = data.eyebrow;
+    csTitle.textContent = data.hl.replace(/&trade;/g, '™');
+    csSubtitle.textContent = data.subtitle;
+    csIntro.innerHTML = data.intro;
+
+    csHero.className = 'p1cs-hero';
+    csHero.innerHTML = '';
+    csHero.style.backgroundImage = '';
+    if (data.hero.type === 'image') {
+      csHero.style.backgroundImage = 'url(' + data.hero.src + ')';
+    } else {
+      csHero.classList.add('p1cs-hero-grad');
+      var mark = document.createElement('span');
+      mark.className = 'p1cs-hero-mark';
+      mark.textContent = data.hero.mark;
+      csHero.appendChild(mark);
+    }
+
+    csServices.innerHTML = data.services.map(function (s) {
+      return '<li>' + s + '</li>';
+    }).join('');
+
+    csSections.innerHTML = data.sections.map(function (s) {
+      if (s.type === 'quote') {
+        return '<blockquote class="p1cs-quote"><p>' + s.text + '</p><cite>' + s.author + '</cite></blockquote>';
+      }
+      return '<div class="p1cs-section"><h3>' + s.heading + '</h3><p>' + s.body + '</p></div>';
+    }).join('');
+
+    if (data.highlight.type === 'stat') {
+      csHighlight.innerHTML = '<p class="p1cs-highlight-stat">' + data.highlight.value + '</p><p class="p1cs-highlight-label">' + data.highlight.label + '</p>';
+    } else {
+      csHighlight.innerHTML = '<p class="p1cs-highlight-note">' + data.highlight.text + '</p>';
+    }
+
+    var nextKey = CLIENT_ORDER[(CLIENT_ORDER.indexOf(key) + 1) % CLIENT_ORDER.length];
+    csNextName.textContent = CLIENT_COPY[nextKey].hl.replace(/&trade;/g, '™');
+    caseEl.dataset.next = nextKey;
+
+    caseEl.scrollTop = 0;
+  }
+
+  function openCaseStudy(key) {
+    renderCaseStudy(key);
+    caseEl.classList.add('p1cs-open');
+  }
+
+  function closeCaseStudy() {
+    caseEl.classList.remove('p1cs-open');
+  }
+
+  document.getElementById('p1cs-back').addEventListener('click', closeCaseStudy);
+  document.getElementById('p1cs-next').addEventListener('click', function () {
+    renderCaseStudy(caseEl.dataset.next);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && caseEl.classList.contains('p1cs-open')) closeCaseStudy();
+  });
+})();
+</script>
+
+</div><!-- /page-1 -->
+
+<!-- Concept 2: Alex Vanderzon style — PurpleDrop content -->
+<div id="page-2" class="concept-page">
+<style>
+#page-2{background:#fff;color:#000;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:13.5px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100svh}
+#page-2 .av-hdr{padding:28px 28px 0}
+#page-2 .av-nm{margin:0;font-size:13.5px;font-weight:400}
+#page-2 .av-rl{margin:0 0 18px;font-size:13.5px;color:#888}
+#page-2 .av-bio{max-width:252px;font-size:13.5px}
+#page-2 .av-bio p{margin:0 0 13px}
+#page-2 .av-bio a{color:#000;text-decoration-thickness:1px;text-underline-offset:2px}
+#page-2 .av-soc{display:flex;gap:14px;margin-top:18px;font-size:13.5px}
+#page-2 .av-soc a{color:#000;text-decoration:none}
+#page-2 .av-soc a:hover{opacity:.6}
+#page-2 .av-fnav{display:flex;gap:18px;padding:26px 28px 0;list-style:none;margin:0}
+#page-2 .av-fb{background:none;border:none;padding:0;font-size:13.5px;font-family:inherit;color:#888;cursor:pointer;line-height:1}
+#page-2 .av-fb.on{color:#000}
+#page-2 .av-row{display:flex;align-items:flex-end;gap:10px;padding:16px 28px 48px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+#page-2 .av-row::-webkit-scrollbar{display:none}
+#page-2 .av-card{flex-shrink:0;border-radius:16px;overflow:hidden;background:#f2f2f7;height:600px;min-width:200px}
+#page-2 .av-card img{display:block;height:100%;width:auto;max-width:none}
+</style>
+
+<div class="av-hdr">
+  <p class="av-nm">PurpleDrop</p>
+  <p class="av-rl">Strategic Product &amp; Brand Design</p>
+  <div class="av-bio">
+    <p>We design products and brands for ambitious founders and business leaders. People out to make a change.</p>
+    <p>Clients include AI Native companies in <a href="#">Law, HR, Accounting</a>, and more.</p>
+  </div>
+  <div class="av-soc">
+    <a href="mailto:gaurav@purpledrop.nl">Email</a>
+  </div>
+</div>
+
+<nav aria-label="Portfolio filters">
+  <ul class="av-fnav">
+    <li><button class="av-fb on" data-filter="all">All</button></li>
+    <li><button class="av-fb" data-filter="liveflow">LiveFlow</button></li>
+    <li><button class="av-fb" data-filter="aware">AWARE</button></li>
+    <li><button class="av-fb" data-filter="pratilipi">Pratilipi</button></li>
+  </ul>
+</nav>
+
+<div class="av-row">
+  <!-- LiveFlow: Consolidation UI — dark navy bg so the light UI pops -->
+  <div class="av-card av-lg" data-project="liveflow" style="background:#0e1830">
+    <img src="https://framerusercontent.com/images/rkES1JnpIqilR8OHc8lT0wBjjU.png" alt="LiveFlow Consolidation UI" loading="lazy" style="object-position:center top">
+  </div>
+  <!-- Pratilipi: hand holding phone with app -->
+  <div class="av-card av-sm" data-project="pratilipi" style="background:#1e1a3c">
+    <img src="https://framerusercontent.com/images/RH1dDH2UTtkPf5ZP0gjco1zF0o.png" alt="Pratilipi app" loading="lazy">
+  </div>
+  <!-- AWARE: editorial product shot -->
+  <div class="av-card av-lg" data-project="aware">
+    <img src="https://framerusercontent.com/images/wHIhFO4NipubgQ69V0tcf4YtD4.png" alt="AWARE product detail" loading="lazy">
+  </div>
+</div>
+
+<script>
+(function(){
+  var btns=document.querySelectorAll('#page-2 .av-fb');
+  var cards=document.querySelectorAll('#page-2 .av-card');
+  btns.forEach(function(b){
+    b.addEventListener('click',function(){
+      btns.forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');
+      var f=b.getAttribute('data-filter');
+      cards.forEach(function(c){
+        c.style.display=(f==='all'||c.getAttribute('data-project')===f)?'':'none';
+      });
+    });
+  });
+
+  // Case study open/close
+  cards.forEach(function(c){
+    c.addEventListener('click',function(){
+      var project=c.getAttribute('data-project');
+      openCaseStudy(project);
+    });
+  });
+})();
+</script>
+
+<!-- ── Case study overlay ── -->
+<style>
+#cs-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#fff;
+  z-index:8888;
+  overflow-y:auto;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size:14px;
+  line-height:1.65;
+  color:#111;
+  -webkit-font-smoothing:antialiased;
+}
+#cs-overlay.open{display:block}
+
+/* sidebar */
+#cs-sidebar{
+  position:fixed;
+  top:0;left:0;
+  width:200px;
+  padding:28px 24px;
+  height:100%;
+  box-sizing:border-box;
+}
+#cs-back{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:13px;color:#555;
+  background:none;border:none;padding:0;cursor:pointer;
+  text-decoration:none;
+  margin-bottom:32px;
+}
+#cs-back:hover{color:#000}
+#cs-toc{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+#cs-toc a{color:#999;font-size:12.5px;text-decoration:none;display:block;transition:color .15s}
+#cs-toc a:hover,#cs-toc a.toc-active{color:#111}
+
+/* main column */
+#cs-main{
+  margin-left:200px;
+  max-width:640px;
+  padding:80px 48px 120px 0;
+}
+#cs-title{margin:0 0 4px;font-size:14px;font-weight:400}
+#cs-date{margin:0 0 36px;font-size:13px;color:#aaa}
+#cs-body h2{font-size:13.5px;font-weight:600;margin:48px 0 10px}
+#cs-body p{margin:0 0 18px;color:#222}
+#cs-body figure{margin:32px 0}
+#cs-body figure img{width:100%;border-radius:10px;display:block}
+#cs-body figcaption{margin-top:10px;font-size:12px;color:#999;text-align:center}
+
+/* margin annotations */
+.cs-annot{
+  position:absolute;
+  right:calc(100% - 640px - 200px + 48px);
+  /* intentionally positioned per element via inline style */
+  font-family:"Helvetica Neue",Helvetica,cursive;
+  font-size:13px;
+  color:#888;
+  font-style:italic;
+  pointer-events:none;
+  white-space:nowrap;
+}
+
+/* card hover cue */
+#page-2 .av-card{cursor:pointer;transition:transform .18s,box-shadow .18s}
+#page-2 .av-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.12)}
+</style>
+
+<div id="cs-overlay">
+  <div id="cs-sidebar">
+    <button id="cs-back">← Index</button>
+    <ul id="cs-toc"></ul>
+  </div>
+  <div id="cs-main">
+    <p id="cs-title"></p>
+    <p id="cs-date"></p>
+    <div id="cs-body"></div>
+  </div>
+</div>
+
+<script>
+var CASE_STUDIES = {
+  liveflow: {
+    title: 'LiveFlow — Consolidation UI',
+    date: 'B2B · Finance · Series A · UX · New York',
+    toc: ['Overview','The problem','Re-building interactions','What customers loved'],
+    body: `
+      <h2 id="overview">Overview</h2>
+      <p>LiveFlow helps finance teams consolidate multi-entity P&L, balance sheets, and cash flow reports in real time. We were brought in to redesign their core Consolidation UI — the screen finance professionals live in every day.</p>
+
+      <figure>
+        <img src="https://framerusercontent.com/images/rkES1JnpIqilR8OHc8lT0wBjjU.png" alt="LiveFlow Consolidation UI">
+        <figcaption>The redesigned Consolidation UI — faster, cleaner, and exactly what customers had been asking for.</figcaption>
+      </figure>
+
+      <h2 id="the-problem">The problem</h2>
+      <p>Finance teams were spending hours every month stitching together spreadsheets from multiple entities. The old UI made it hard to scan across accounts, compare columns, and trust the numbers at a glance.</p>
+      <p>We audited user sessions, ran interviews, and identified that 80% of the friction came from three patterns: slow column comparison, unclear data hierarchy, and no way to quickly filter by entity.</p>
+
+      <h2 id="re-building-interactions">Re-building interactions</h2>
+      <p>We rebuilt interactions to make users 20x faster. Every click path was mapped and reduced. Column alignment was tightened, data density was increased without sacrificing legibility, and the hierarchy was made explicit through type weight and subtle color coding.</p>
+      <p>The result was a UI that senior accountants could scan in seconds rather than minutes.</p>
+
+      <h2 id="what-customers-loved">What customers loved</h2>
+      <p>"The feedback rolling in on the new Consolidation UI has been phenomenal. It's faster, cleaner and exactly what the customers have been asking for."</p>
+      <p><strong>Lasse Kalkar,</strong> CEO, LiveFlow</p>
+    `
+  },
+  aware: {
+    title: 'AWARE™ — Brand identity for a bold new strategy',
+    date: 'B2B · Textiles · Strategy · Blockchain · Amsterdam',
+    toc: ['Overview','Strategic foundation','Visual identity','The outcome'],
+    body: `
+      <h2 id="overview">Overview</h2>
+      <p>AWARE™ is a data-driven textile traceability platform based in Amsterdam, enabling brands to back every product claim with trusted, verifiable data. They came to us at a pivotal moment — a new strategic direction needed a new identity to match.</p>
+
+      <figure>
+        <img src="https://framerusercontent.com/images/wHIhFO4NipubgQ69V0tcf4YtD4.png" alt="AWARE editorial product shot">
+        <figcaption>AWARE™ — All your product claims, backed by trusted data.</figcaption>
+      </figure>
+
+      <h2 id="strategic-foundation">Strategic foundation</h2>
+      <p>Before any visual work, we ran a structured brand strategy process — positioning workshops, competitive mapping, and archetype exploration. The goal was to get to the core of AWARE's identity: what they stand for, who they serve, and where they're heading.</p>
+      <p>The insight: AWARE sits at the intersection of trust and transformation. Their product doesn't just track textiles — it enables a fundamentally more honest fashion industry.</p>
+
+      <h2 id="visual-identity">Visual identity</h2>
+      <p>The identity system translates that tension between rigour and boldness into a visual language. Clean data structures paired with confident, high-contrast typography. A palette rooted in neutrals with a single assertive accent.</p>
+      <p>Every touchpoint — from deck templates to the product UI — was brought into alignment with the new brand.</p>
+
+      <h2 id="the-outcome">The outcome</h2>
+      <p>"Working with Gaurav on AWARE™'s rebrand was one of the most valuable creative processes I've been through. He came with a structured methodology for getting to the core of our identity, aesthetically and strategically, and had a real talent for translating that into visual ideas that felt right for where we were heading."</p>
+      <p><strong>Maaike Orta,</strong> Marketing Manager, AWARE™</p>
+    `
+  },
+  pratilipi: {
+    title: 'Pratilipi — App for the largest storytelling platform in India',
+    date: 'Consumer · Content · Series A · UX · Bangalore',
+    toc: ['Overview','Laying the foundation','Design system','The impact'],
+    body: `
+      <h2 id="overview">Overview</h2>
+      <p>Pratilipi is India's largest vernacular storytelling platform, with millions of readers and writers across Hindi, Tamil, Telugu, and a dozen other languages. Gaurav joined as the first designer on the team and built the design foundations from scratch.</p>
+
+      <figure>
+        <img src="https://framerusercontent.com/images/RH1dDH2UTtkPf5ZP0gjco1zF0o.png" alt="Pratilipi app">
+        <figcaption>A consumer product loved by millions — 4.7 stars, 71,705 ratings.</figcaption>
+      </figure>
+
+      <h2 id="laying-the-foundation">Laying the foundation</h2>
+      <p>As the first designer, the challenge wasn't just designing screens — it was establishing how design would work inside the company. That meant defining principles, setting up processes, and building a shared visual language that could scale with the team.</p>
+      <p>The app needed to serve readers discovering stories, writers publishing content, and editors curating the best of both. Three distinct jobs, one cohesive experience.</p>
+
+      <h2 id="design-system">Design system</h2>
+      <p>We built a lightweight design system that could accommodate 12+ Indian languages — each with different script widths, line heights, and reading conventions. Typography choices that worked for Latin script often failed for Devanagari or Tamil.</p>
+      <p>The system accounted for this from the ground up, ensuring every component was language-agnostic.</p>
+
+      <h2 id="the-impact">The impact</h2>
+      <p>"As the first designer on the Pratilipi team, Gaurav laid the foundations of how millions of users would discover, create and consume content on the Pratilipi App."</p>
+      <p><strong>Ranjeet Pratap Singh,</strong> CEO, Pratilipi</p>
+    `
+  }
+};
+
+function openCaseStudy(project){
+  var data=CASE_STUDIES[project];
+  if(!data)return;
+
+  // Populate
+  document.getElementById('cs-title').textContent=data.title;
+  document.getElementById('cs-date').textContent=data.date;
+  document.getElementById('cs-body').innerHTML=data.body;
+
+  // TOC
+  var toc=document.getElementById('cs-toc');
+  toc.innerHTML='';
+  data.toc.forEach(function(item){
+    var id=item.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
+    var li=document.createElement('li');
+    var a=document.createElement('a');
+    a.href='#'+id;
+    a.textContent=item;
+    li.appendChild(a);
+    toc.appendChild(li);
+  });
+
+  document.getElementById('cs-overlay').classList.add('open');
+  document.getElementById('cs-overlay').scrollTop=0;
+
+  // TOC active highlighting on scroll
+  var overlay=document.getElementById('cs-overlay');
+  overlay.onscroll=function(){
+    var headings=document.querySelectorAll('#cs-body h2');
+    var links=document.querySelectorAll('#cs-toc a');
+    var scrollTop=overlay.scrollTop+120;
+    var active=null;
+    headings.forEach(function(h){
+      if(h.offsetTop<=scrollTop)active=h.id;
+    });
+    links.forEach(function(a){
+      a.classList.toggle('toc-active',a.getAttribute('href')==='#'+active);
+    });
+  };
+}
+
+document.getElementById('cs-back').addEventListener('click',function(){
+  document.getElementById('cs-overlay').classList.remove('open');
+});
+
+// Close on Escape
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape')document.getElementById('cs-overlay').classList.remove('open');
+});
+</script>
+
+</div><!-- /page-2 -->
 
 <!-- Concept 3: current design -->
-<div id="page-3" class="concept-page active">
+<div id="page-3" class="concept-page">
 <main class="hero">
   <div class="headline-stage">
     <h1 class="sr-only">Design for pioneers</h1>
@@ -231,9 +1182,9 @@
 
 <!-- Tab switcher -->
 <nav class="concept-switcher" aria-label="Concept switcher">
-  <button class="cs-tab" data-page="1">Concept 1</button>
+  <button class="cs-tab cs-active" data-page="1">Concept 1</button>
   <button class="cs-tab" data-page="2">Concept 2</button>
-  <button class="cs-tab cs-active" data-page="3">Concept 3</button>
+  <button class="cs-tab" data-page="3">Concept 3</button>
   <div class="cs-divider"></div>
   <button class="cs-refresh" id="cs-refresh" title="Reload concept" aria-label="Reload">
     <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
