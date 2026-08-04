@@ -869,27 +869,30 @@
 <!-- Concept 2: Alex Vanderzon style — PurpleDrop content -->
 <div id="page-2" class="concept-page">
 <style>
-#page-2{background:#fff;color:#000;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:13.5px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100svh}
-#page-2 .av-hdr{padding:28px 28px 0}
-#page-2 .av-nm{margin:0;font-size:13.5px;font-weight:400}
-#page-2 .av-rl{margin:0 0 18px;font-size:13.5px;color:#888}
-#page-2 .av-bio{max-width:252px;font-size:13.5px}
+#page-2{background:#fff;color:#000;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100svh}
+#page-2 .av-hdr{padding:80px 28px 0 200px}
+#page-2 .av-nm{display:block;margin:0 0 6px;height:24px;width:auto}
+#page-2 .av-rl{margin:0 0 18px;font-size:16px;color:#888}
+#page-2 .av-bio{max-width:400px;font-size:16px}
 #page-2 .av-bio p{margin:0 0 13px}
 #page-2 .av-bio a{color:#000;text-decoration-thickness:1px;text-underline-offset:2px}
-#page-2 .av-soc{display:flex;gap:14px;margin-top:18px;font-size:13.5px}
+#page-2 .av-soc{display:flex;gap:14px;margin-top:18px;font-size:16px}
 #page-2 .av-soc a{color:#000;text-decoration:none}
 #page-2 .av-soc a:hover{opacity:.6}
-#page-2 .av-fnav{display:flex;gap:18px;padding:26px 28px 0;list-style:none;margin:0}
-#page-2 .av-fb{background:none;border:none;padding:0;font-size:13.5px;font-family:inherit;color:#888;cursor:pointer;line-height:1}
-#page-2 .av-fb.on{color:#000}
-#page-2 .av-row{display:flex;align-items:flex-end;gap:10px;padding:16px 28px 48px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+#page-2 .av-logos{display:flex;align-items:center;flex-wrap:wrap;gap:36px;padding:26px 28px 0 200px;margin:0;list-style:none}
+#page-2 .av-logos li{display:flex;align-items:center}
+#page-2 .av-logos img{display:block;height:18px;width:auto;filter:grayscale(100%);opacity:.45;transition:opacity .15s ease}
+#page-2 .av-logos img:hover{opacity:.8}
+#page-2 .av-logos img.av-logo-porsche,
+#page-2 .av-logos img.av-logo-adidas{height:26px}
+#page-2 .av-row{display:flex;align-items:flex-end;gap:10px;padding:16px 28px 48px 200px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
 #page-2 .av-row::-webkit-scrollbar{display:none}
-#page-2 .av-card{flex-shrink:0;border-radius:16px;overflow:hidden;background:#f2f2f7;height:600px;min-width:200px}
+#page-2 .av-card{flex-shrink:0;border-radius:16px;overflow:hidden;background:#f2f2f7;height:400px;min-width:200px}
 #page-2 .av-card img{display:block;height:100%;width:auto;max-width:none}
 </style>
 
 <div class="av-hdr">
-  <p class="av-nm">PurpleDrop</p>
+  <img class="av-nm" src="assets/purpledrop-logo.png" alt="PurpleDrop">
   <p class="av-rl">Strategic Product &amp; Brand Design</p>
   <div class="av-bio">
     <p>We design products and brands for ambitious founders and business leaders. People out to make a change.</p>
@@ -900,44 +903,37 @@
   </div>
 </div>
 
-<nav aria-label="Portfolio filters">
-  <ul class="av-fnav">
-    <li><button class="av-fb on" data-filter="all">All</button></li>
-    <li><button class="av-fb" data-filter="liveflow">LiveFlow</button></li>
-    <li><button class="av-fb" data-filter="aware">AWARE</button></li>
-    <li><button class="av-fb" data-filter="pratilipi">Pratilipi</button></li>
+<nav aria-label="Selected clients">
+  <ul class="av-logos">
+    <li><img src="assets/logos/porsche.svg" alt="Porsche" class="av-logo-porsche"></li>
+    <li><img src="assets/logos/adidas.svg" alt="Adidas" class="av-logo-adidas"></li>
+    <li><img src="assets/logos/liveflow.svg" alt="LiveFlow" class="av-logo-liveflow"></li>
+    <li><img src="assets/logos/aware.png" alt="AWARE" class="av-logo-aware"></li>
+    <li><img src="assets/logos/pratilipi.png" alt="Pratilipi" class="av-logo-pratilipi"></li>
   </ul>
 </nav>
 
 <div class="av-row">
-  <!-- LiveFlow: Consolidation UI — dark navy bg so the light UI pops -->
-  <div class="av-card av-lg" data-project="liveflow" style="background:#0e1830">
-    <img src="https://framerusercontent.com/images/rkES1JnpIqilR8OHc8lT0wBjjU.png" alt="LiveFlow Consolidation UI" loading="lazy" style="object-position:center top">
+  <div class="av-card" data-project="porsche" style="background:#cfd9e0">
+    <img src="assets/porsche.avif" alt="Porsche" loading="lazy">
   </div>
-  <!-- Pratilipi: hand holding phone with app -->
-  <div class="av-card av-sm" data-project="pratilipi" style="background:#1e1a3c">
-    <img src="https://framerusercontent.com/images/RH1dDH2UTtkPf5ZP0gjco1zF0o.png" alt="Pratilipi app" loading="lazy">
+  <div class="av-card" data-project="adidas" style="background:#16262b">
+    <img src="assets/adidas.webp" alt="Adidas" loading="lazy">
   </div>
-  <!-- AWARE: editorial product shot -->
-  <div class="av-card av-lg" data-project="aware">
-    <img src="https://framerusercontent.com/images/wHIhFO4NipubgQ69V0tcf4YtD4.png" alt="AWARE product detail" loading="lazy">
+  <div class="av-card" data-project="liveflow" style="background:#10151c">
+    <img src="assets/liveflow.avif" alt="LiveFlow" loading="lazy">
+  </div>
+  <div class="av-card" data-project="aware" style="background:#191410">
+    <img src="assets/aware.webp" alt="AWARE" loading="lazy">
+  </div>
+  <div class="av-card" data-project="pratilipi" style="background:#3c2a1e">
+    <img src="assets/pratilipi.webp" alt="Pratilipi" loading="lazy">
   </div>
 </div>
 
 <script>
 (function(){
-  var btns=document.querySelectorAll('#page-2 .av-fb');
   var cards=document.querySelectorAll('#page-2 .av-card');
-  btns.forEach(function(b){
-    b.addEventListener('click',function(){
-      btns.forEach(function(x){x.classList.remove('on');});
-      b.classList.add('on');
-      var f=b.getAttribute('data-filter');
-      cards.forEach(function(c){
-        c.style.display=(f==='all'||c.getAttribute('data-project')===f)?'':'none';
-      });
-    });
-  });
 
   // Case study open/close
   cards.forEach(function(c){
@@ -969,7 +965,7 @@
 /* sidebar */
 #cs-sidebar{
   position:fixed;
-  top:0;left:0;
+  top:0;left:200px;
   width:200px;
   padding:28px 24px;
   height:100%;
@@ -989,7 +985,7 @@
 
 /* main column */
 #cs-main{
-  margin-left:200px;
+  margin-left:400px;
   max-width:640px;
   padding:80px 48px 120px 0;
 }
@@ -1033,6 +1029,46 @@
 
 <script>
 var CASE_STUDIES = {
+  porsche: {
+    title: 'Porsche — Reimagining the digital configurator',
+    date: 'Automotive · Digital Experience · Stuttgart',
+    toc: ['Overview','The approach','The outcome'],
+    body: `
+      <h2 id="overview">Overview</h2>
+      <p>Porsche came to us with a configurator experience that felt at odds with the precision of the cars themselves — a multi-step process that buried decisions in dense forms and inconsistent visual language.</p>
+
+      <figure>
+        <img src="assets/porsche.avif" alt="Porsche configurator">
+        <figcaption>Reimagining the digital configurator for a brand built on craft.</figcaption>
+      </figure>
+
+      <h2 id="the-approach">The approach</h2>
+      <p>We rebuilt the configurator around a single continuous canvas, letting customers see every change to their build in real time instead of jumping between static preview screens.</p>
+
+      <h2 id="the-outcome">The outcome</h2>
+      <p>Fewer steps, clearer trade-offs, and a build experience that finally feels as considered as the cars themselves.</p>
+    `
+  },
+  adidas: {
+    title: 'Adidas — Sharpening how product stories launch',
+    date: 'Sportswear · Brand & Digital · Herzogenaurach',
+    toc: ['Overview','The approach','The outcome'],
+    body: `
+      <h2 id="overview">Overview</h2>
+      <p>Adidas needed new product stories to launch faster across digital without losing the sharpness the brand is known for — a system, not a one-off campaign.</p>
+
+      <figure>
+        <img src="assets/adidas.webp" alt="Adidas product launch">
+        <figcaption>Sharpening how new product stories launch across digital.</figcaption>
+      </figure>
+
+      <h2 id="the-approach">The approach</h2>
+      <p>We built a modular launch system — templated layouts, motion, and type rules that let smaller teams ship on-brand product drops without waiting on a full campaign build.</p>
+
+      <h2 id="the-outcome">The outcome</h2>
+      <p>Faster to ship, sharper to look at, and consistent across every market the system touched.</p>
+    `
+  },
   liveflow: {
     title: 'LiveFlow — Consolidation UI',
     date: 'B2B · Finance · Series A · UX · New York',
