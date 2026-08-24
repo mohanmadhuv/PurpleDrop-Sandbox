@@ -41,9 +41,13 @@ export function CaseStudies() {
         </p>
       </div>
 
+      {/* Aligned to the content container's left edge (160px right
+          margin + 660px content width = 820px from the viewport's
+          right edge), matching the title's own left edge rather than
+          the right-aligned header/nav. */}
       <ul
         id="work"
-        className="fixed right-40 bottom-16 z-10 flex flex-col text-base font-normal tracking-tight"
+        className="fixed bottom-16 left-[calc(100%-820px)] z-10 flex flex-col text-base font-normal tracking-tight"
         onMouseLeave={() => setActiveIndex(null)}
       >
         {clients.map((client, index) => (
