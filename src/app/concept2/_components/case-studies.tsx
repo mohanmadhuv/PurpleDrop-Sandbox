@@ -48,7 +48,7 @@ export function CaseStudies() {
             </span>
           </Link>
 
-          <p className="mt-10 max-w-[420px] text-base leading-tight font-light tracking-tight text-black sm:text-xl md:text-2xl lg:text-[32px]">
+          <p className="mt-10 max-w-[480px] text-base leading-tight font-light tracking-tight text-black sm:text-xl md:text-2xl lg:text-[32px]">
             Strategic product design agency for startups looking to raise
             their series A / B funding
           </p>
