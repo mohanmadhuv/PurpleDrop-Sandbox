@@ -4,21 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
-const clients = [
-  "LexHub",
-  "Exact Centaur",
-  "Pratilipi",
-  "LiveFlow",
-  "Msasa",
-  "MessageBird",
-  "Swydo",
-  "Visionplanner",
-  "Philips",
-  "Adidas",
-  "Ford",
-  "SuperTrash",
-  "Porsche",
-];
+import { clientRoster as clients } from "@/lib/projects";
 
 export function CaseStudies() {
   const [activeIndex, setActiveIndex] = useState(0);

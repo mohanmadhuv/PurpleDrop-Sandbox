@@ -3,51 +3,9 @@
 import { motion } from "motion/react";
 
 import { cardReveal } from "@/lib/motion";
+import { distributeColumns, projects, type Project } from "@/lib/projects";
 
-type Project = {
-  client: string;
-  service: string;
-  year: string;
-  aspect: number;
-};
-
-const columnOne: Project[] = [
-  { client: "Lexhub", service: "Design System", year: "2026", aspect: 684 / 520 },
-  { client: "MessageBird", service: "Product Design", year: "2025", aspect: 684 / 960 },
-  { client: "Visionplanner", service: "Product Design", year: "2024", aspect: 684 / 576 },
-  { client: "Philips", service: "Product Design", year: "2023", aspect: 684 / 720 },
-  { client: "SuperTrash", service: "Product Design", year: "2022", aspect: 684 / 520 },
-  { client: "Pratilipi", service: "Product Design", year: "2021", aspect: 684 / 720 },
-];
-
-const columnTwo: Project[] = [
-  {
-    client: "Msasa",
-    service: "User Interface Design, Prototyping",
-    year: "2026",
-    aspect: 684 / 576,
-  },
-  {
-    client: "LiveFlow",
-    service: "Product Design, Design System",
-    year: "2025",
-    aspect: 684 / 520,
-  },
-  {
-    client: "Swydo",
-    service: "User Research, Product Design",
-    year: "2024",
-    aspect: 684 / 720,
-  },
-  {
-    client: "Exact Centaur",
-    service: "User Research, Product Design",
-    year: "2023",
-    aspect: 684 / 520,
-  },
-  { client: "Adidas", service: "Product Design", year: "2022", aspect: 684 / 520 },
-  { client: "Ford", service: "Product Design", year: "2021", aspect: 684 / 960 },
-];
+const [columnOne, columnTwo] = distributeColumns(projects, 2);
 
 function ProjectCard({ client, service, year, aspect }: Project) {
   return (
