@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 import { clientRoster as clients } from "@/lib/projects";
+
+import { SiteHeader } from "./site-header";
 
 export function CaseStudies() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -33,20 +33,7 @@ export function CaseStudies() {
     <div className="lg:grid lg:grid-cols-[auto_1fr] lg:items-start lg:gap-x-16">
       <div className="page-px-wide flex flex-col pt-6 md:pt-10 lg:sticky lg:top-0 lg:h-screen lg:justify-between lg:py-16">
         <div>
-          <Link href="/concept2" className="flex w-fit shrink-0 items-center gap-3">
-            <Image
-              src="/logo.svg"
-              alt="PurpleDrop"
-              width={54}
-              height={29}
-              className="h-[29px] w-[54px]"
-              priority
-            />
-            <span className="text-2xl leading-none tracking-tight text-brand">
-              <span className="font-bold">Purple</span>
-              <span className="font-light">Drop</span>
-            </span>
-          </Link>
+          <SiteHeader />
 
           <p className="mt-10 max-w-[720px] text-[32px] leading-tight font-light tracking-tight text-black">
             Strategic product design agency for startups looking to raise
