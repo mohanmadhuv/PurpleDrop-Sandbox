@@ -9,7 +9,7 @@ const navLinks = [
 
 export function SiteHeader() {
   return (
-    <div className="flex w-full max-w-[720px] items-center justify-between">
+    <div className="flex w-full max-w-[660px] items-center justify-between">
       <Link href="/concept2b" className="flex w-fit shrink-0 items-center">
         <Image
           src="/logo.svg"
