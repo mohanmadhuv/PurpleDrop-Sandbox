@@ -150,16 +150,25 @@
 }
 
 /* PurpleDrop layout utilities — the spacious page-margin scale
-   reused across concepts (concept3/4's 160px side margin, 80px top
-   margin). Fixed at its desktop value on every viewport — no
-   responsive variation anywhere on this site except the logo. */
+   reused across concepts (concept2/3's 160px side margin, 80px top
+   margin). Mobile PWA view must be identical across every concept
+   (nav, title, single-column stacked project list), so these fall
+   back to the same 24px margin concept1a/1b use below lg, and only
+   step up to the spacious desktop values at lg. */
 @utility page-px-wide {
-  padding-left: 10rem;
-  padding-right: 10rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  @variant lg {
+    padding-left: 10rem;
+    padding-right: 10rem;
+  }
 }
 
 @utility page-pt-wide {
-  padding-top: 5rem;
+  padding-top: 1.5rem;
+  @variant lg {
+    padding-top: 5rem;
+  }
 }
 
 @utility placeholder-block {

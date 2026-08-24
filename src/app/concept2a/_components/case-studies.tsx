@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "motion/react";
 
 import { clientRoster as clients } from "@/lib/projects";
 import { cn } from "@/lib/utils";
+import { MobileWorkList } from "@/components/mobile-work-list";
 
 import { SiteHeader } from "./site-header";
 
@@ -26,7 +27,7 @@ export function CaseStudies() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="placeholder-block fixed top-0 right-0 bottom-0 left-[852px] z-0"
+            className="placeholder-block fixed top-0 right-0 bottom-0 left-[852px] z-0 hidden lg:block"
           />
         )}
       </AnimatePresence>
@@ -40,30 +41,33 @@ export function CaseStudies() {
         </p>
       </div>
 
-      <ul
-        id="work"
-        className="fixed bottom-16 left-40 z-10 flex flex-col text-base font-normal tracking-tight"
-        onMouseLeave={() => setActiveIndex(null)}
-      >
-        {clients.map((client, index) => (
-          <li key={client} className="leading-golden">
-            <button
-              type="button"
-              onMouseEnter={() => setActiveIndex(index)}
-              onFocus={() => setActiveIndex(index)}
-              onBlur={() => setActiveIndex(null)}
-              className={cn(
-                "text-left transition-colors",
-                index === activeIndex
-                  ? "text-black"
-                  : "text-muted-text hover:text-black"
-              )}
-            >
-              {client}
-            </button>
-          </li>
-        ))}
-      </ul>
+      <div id="work">
+        <ul
+          className="fixed bottom-16 left-40 z-10 hidden flex-col text-base font-normal tracking-tight lg:flex"
+          onMouseLeave={() => setActiveIndex(null)}
+        >
+          {clients.map((client, index) => (
+            <li key={client} className="leading-golden">
+              <button
+                type="button"
+                onMouseEnter={() => setActiveIndex(index)}
+                onFocus={() => setActiveIndex(index)}
+                onBlur={() => setActiveIndex(null)}
+                className={cn(
+                  "text-left transition-colors",
+                  index === activeIndex
+                    ? "text-black"
+                    : "text-muted-text hover:text-black"
+                )}
+              >
+                {client}
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        <MobileWorkList />
+      </div>
     </div>
   );
 }
