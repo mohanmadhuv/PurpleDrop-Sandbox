@@ -25,7 +25,7 @@ export function SiteHeader() {
         </span>
       </Link>
 
-      <nav className="mt-6 flex items-center gap-8 text-base font-normal tracking-tight">
+      <nav className="mt-16 flex items-center gap-8 text-base font-normal tracking-tight">
         {navLinks.map((link) => (
           <Link
             key={link.href}

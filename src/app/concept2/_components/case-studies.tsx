@@ -35,7 +35,7 @@ export function CaseStudies() {
         <div>
           <SiteHeader />
 
-          <p className="mt-10 max-w-[720px] text-[32px] leading-tight font-light tracking-tight text-black">
+          <p className="mt-8 max-w-[720px] text-[32px] leading-tight font-light tracking-tight text-black">
             Strategic product design agency for startups looking to raise
             their series A / B funding
           </p>
