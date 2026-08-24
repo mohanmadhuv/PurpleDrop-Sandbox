@@ -37,7 +37,7 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-12 text-base font-medium tracking-tighter lg:col-start-3 lg:flex">
+        <nav className="hidden items-center gap-12 text-base font-normal tracking-tighter lg:col-start-3 lg:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -73,7 +73,7 @@ export function SiteHeader() {
                   render={
                     <Link
                       href={link.href}
-                      className="rounded-md px-2 py-2.5 text-base font-medium text-black transition-colors hover:bg-muted"
+                      className="rounded-md px-2 py-2.5 text-base font-normal text-black transition-colors hover:bg-muted"
                     />
                   }
                 >

@@ -16,10 +16,10 @@ function ProjectCard({ client, service, year, aspect }: Project) {
       />
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-base leading-tight tracking-tight">
         <div className="flex flex-wrap items-baseline gap-x-2">
-          <span className="font-medium text-muted-text">{client}</span>
+          <span className="font-normal text-muted-text">{client}</span>
           <span className="font-normal text-black">{service}</span>
         </div>
-        <span className="shrink-0 font-medium text-muted-text">{year}</span>
+        <span className="shrink-0 font-normal text-muted-text">{year}</span>
       </div>
     </motion.div>
   );

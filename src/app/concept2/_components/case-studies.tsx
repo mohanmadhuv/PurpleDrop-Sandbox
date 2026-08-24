@@ -54,7 +54,7 @@ export function CaseStudies() {
           </p>
         </div>
 
-        <ul className="mt-10 flex flex-col text-base font-medium tracking-tight lg:mt-0">
+        <ul className="mt-10 flex flex-col text-base font-normal tracking-tight lg:mt-0">
           {clients.map((client, index) => (
             <li key={client} className="leading-golden">
               <span
@@ -83,7 +83,7 @@ export function CaseStudies() {
               }}
               className="placeholder-block aspect-[4/3] w-full lg:aspect-video"
             />
-            <span className="text-base font-medium tracking-tight text-muted-text lg:hidden">
+            <span className="text-base font-normal tracking-tight text-muted-text lg:hidden">
               {client}
             </span>
           </div>
