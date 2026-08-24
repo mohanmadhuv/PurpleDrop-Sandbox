@@ -15,8 +15,8 @@ export function CaseStudies() {
   return (
     <div className="relative min-h-screen w-full">
       {/* Panel spans from 32px past the content container's right edge
-          (160px page-px-wide margin + 720px content width + 32px gap)
-          to the viewport's right edge, full height. Keep left-[912px]
+          (160px page-px-wide margin + 680px content width + 32px gap)
+          to the viewport's right edge, full height. Keep left-[872px]
           in sync if any of those values change. */}
       <AnimatePresence>
         {activeClient && (
@@ -26,7 +26,7 @@ export function CaseStudies() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="placeholder-block fixed top-0 right-0 bottom-0 left-[912px] z-0"
+            className="placeholder-block fixed top-0 right-0 bottom-0 left-[872px] z-0"
           />
         )}
       </AnimatePresence>
@@ -34,7 +34,7 @@ export function CaseStudies() {
       <div className="page-px-wide relative z-10 flex w-full flex-col py-16">
         <SiteHeader />
 
-        <p className="mt-30 max-w-[720px] text-[32px] leading-tight font-light tracking-tight text-black">
+        <p className="mt-30 max-w-[680px] text-[32px] leading-tight font-light tracking-tight text-black">
           Strategic product design agency for startups looking to raise
           their series A / B funding
         </p>
