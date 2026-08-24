@@ -13,8 +13,21 @@ export function CaseStudies() {
   const activeClient = activeIndex !== null ? clients[activeIndex] : null;
 
   return (
-    <div className="page-px-wide flex w-full flex-col gap-16 py-16 lg:flex-row lg:items-start lg:justify-between">
-      <div className="flex w-full flex-col lg:max-w-[720px] lg:shrink-0">
+    <div className="relative min-h-screen w-full">
+      <AnimatePresence>
+        {activeClient && (
+          <motion.div
+            key={activeClient}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="placeholder-block fixed inset-0 z-0"
+          />
+        )}
+      </AnimatePresence>
+
+      <div className="page-px-wide relative z-10 flex w-full flex-col py-16">
         <SiteHeader />
 
         <p className="mt-30 max-w-[720px] text-[32px] leading-tight font-light tracking-tight text-black">
@@ -48,22 +61,20 @@ export function CaseStudies() {
         </ul>
       </div>
 
-      <div className="placeholder-block relative aspect-[3/4] w-full overflow-hidden lg:max-w-[480px]">
-        <AnimatePresence>
-          {activeClient && (
-            <motion.span
-              key={activeClient}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="absolute bottom-6 left-6 text-lg font-normal tracking-tight text-black/40"
-            >
-              {activeClient}
-            </motion.span>
-          )}
-        </AnimatePresence>
-      </div>
+      <AnimatePresence>
+        {activeClient && (
+          <motion.span
+            key={activeClient}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed bottom-16 left-40 z-10 text-lg font-normal tracking-tight text-black/40"
+          >
+            {activeClient}
+          </motion.span>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
