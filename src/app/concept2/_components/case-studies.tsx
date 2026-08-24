@@ -1,80 +1,68 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 
 import { clientRoster as clients } from "@/lib/projects";
+import { cn } from "@/lib/utils";
 
 import { SiteHeader } from "./site-header";
 
 export function CaseStudies() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = imageRefs.current.indexOf(
-              entry.target as HTMLDivElement
-            );
-            if (index !== -1) setActiveIndex(index);
-          }
-        });
-      },
-      { rootMargin: "-49% 0px -49% 0px", threshold: 0 }
-    );
-
-    imageRefs.current.forEach((el) => el && observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const activeClient = activeIndex !== null ? clients[activeIndex] : null;
 
   return (
-    <div className="lg:grid lg:grid-cols-[auto_1fr] lg:items-start lg:gap-x-16">
-      <div className="page-px-wide flex flex-col py-16 lg:sticky lg:top-0 lg:h-screen lg:justify-between">
-        <div>
-          <SiteHeader />
+    <div className="page-px-wide flex w-full flex-col gap-16 py-16 lg:flex-row lg:items-start lg:justify-between">
+      <div className="flex w-full flex-col lg:max-w-[720px] lg:shrink-0">
+        <SiteHeader />
 
-          <p className="mt-8 max-w-[720px] text-[32px] leading-tight font-light tracking-tight text-black">
-            Strategic product design agency for startups looking to raise
-            their series A / B funding
-          </p>
-        </div>
+        <p className="mt-30 max-w-[720px] text-[32px] leading-tight font-light tracking-tight text-black">
+          Strategic product design agency for startups looking to raise
+          their series A / B funding
+        </p>
 
-        <ul className="flex flex-col text-base font-normal tracking-tight">
+        <ul
+          id="work"
+          className="mt-16 flex flex-col text-base font-normal tracking-tight"
+          onMouseLeave={() => setActiveIndex(null)}
+        >
           {clients.map((client, index) => (
             <li key={client} className="leading-golden">
-              <span
-                className={
+              <button
+                type="button"
+                onMouseEnter={() => setActiveIndex(index)}
+                onFocus={() => setActiveIndex(index)}
+                onBlur={() => setActiveIndex(null)}
+                className={cn(
+                  "text-left transition-colors",
                   index === activeIndex
-                    ? "text-black transition-colors"
-                    : "text-muted-text transition-colors hover:text-black"
-                }
+                    ? "text-black"
+                    : "text-muted-text hover:text-black"
+                )}
               >
                 {client}
-              </span>
+              </button>
             </li>
           ))}
         </ul>
       </div>
 
-      <div
-        id="work"
-        className="flex flex-col gap-6 py-24 pr-20 pl-0"
-      >
-        {clients.map((client, index) => (
-          <div key={client} className="flex flex-col gap-2">
-            <div
-              ref={(el) => {
-                imageRefs.current[index] = el;
-              }}
-              className="placeholder-block aspect-[4/3] w-full lg:aspect-video"
-            />
-            <span className="text-base font-normal tracking-tight text-muted-text lg:hidden">
-              {client}
-            </span>
-          </div>
-        ))}
+      <div className="placeholder-block relative aspect-[3/4] w-full overflow-hidden lg:max-w-[480px]">
+        <AnimatePresence>
+          {activeClient && (
+            <motion.span
+              key={activeClient}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="absolute bottom-6 left-6 text-lg font-normal tracking-tight text-black/40"
+            >
+              {activeClient}
+            </motion.span>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
