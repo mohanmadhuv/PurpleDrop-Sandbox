@@ -9,7 +9,7 @@ const navLinks = [
 
 export function SiteHeader() {
   return (
-    <div>
+    <div className="flex items-center gap-16">
       <Link href="/concept2" className="flex w-fit shrink-0 items-center gap-3">
         <Image
           src="/logo.svg"
@@ -25,7 +25,7 @@ export function SiteHeader() {
         </span>
       </Link>
 
-      <nav className="mt-16 flex items-center gap-8 text-base font-normal tracking-tight">
+      <nav className="flex items-center gap-8 text-base font-normal tracking-tight">
         {navLinks.map((link) => (
           <Link
             key={link.href}
