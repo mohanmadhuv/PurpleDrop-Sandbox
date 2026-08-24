@@ -14,10 +14,11 @@ export function CaseStudies() {
 
   return (
     <div className="relative min-h-screen w-full">
-      {/* Panel spans from 32px past the content container's right edge
+      {/* Mirrored from concept2a: panel now spans from the viewport's
+          left edge to 32px before the content container's left edge
           (160px page-px-wide margin + 660px content width + 32px gap)
-          to the viewport's right edge, full height. Keep left-[852px]
-          in sync if any of those values change. */}
+          full height. Keep right-[852px] in sync if any of those
+          values change. */}
       <AnimatePresence>
         {activeClient && (
           <motion.div
@@ -26,12 +27,12 @@ export function CaseStudies() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="placeholder-block fixed top-0 right-0 bottom-0 left-[852px] z-0"
+            className="placeholder-block fixed top-0 bottom-0 left-0 right-[852px] z-0"
           />
         )}
       </AnimatePresence>
 
-      <div className="page-px-wide relative z-10 flex w-full flex-col py-16">
+      <div className="page-px-wide relative z-10 flex w-full flex-col items-end py-16">
         <SiteHeader />
 
         <p className="mt-30 max-w-[660px] text-[32px] leading-tight font-light tracking-tight text-black">
@@ -42,7 +43,7 @@ export function CaseStudies() {
 
       <ul
         id="work"
-        className="fixed bottom-16 left-40 z-10 flex flex-col text-base font-normal tracking-tight"
+        className="fixed right-40 bottom-16 z-10 flex flex-col text-base font-normal tracking-tight"
         onMouseLeave={() => setActiveIndex(null)}
       >
         {clients.map((client, index) => (
