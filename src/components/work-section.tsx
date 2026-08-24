@@ -73,7 +73,7 @@ function ProjectCard({ client, service, year, aspect }: Project) {
 
 export function WorkSection() {
   return (
-    <section id="work" className="mx-auto w-full max-w-[1392px] px-6 py-16 lg:pt-20">
+    <section id="work" className="w-full px-6 py-16 lg:pt-20">
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="flex flex-col gap-6">
           {columnOne.map((project) => (

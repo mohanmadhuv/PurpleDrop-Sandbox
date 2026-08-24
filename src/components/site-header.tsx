@@ -20,7 +20,7 @@ const navLinks = [
 
 export function SiteHeader() {
   return (
-    <header className="mx-auto w-full max-w-[1392px] px-6 pt-6">
+    <header className="w-full px-6 pt-6">
       <div className="flex items-center justify-between gap-6 lg:grid lg:grid-cols-2 lg:items-start">
         <Link href="/" className="flex shrink-0 items-center gap-3">
           <Image
