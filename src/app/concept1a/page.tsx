@@ -7,7 +7,7 @@ export default function Concept1APage() {
       <SiteHeader />
 
       <section className="w-full px-6">
-        <p className="mt-30 max-w-[800px] text-base leading-tight font-normal tracking-tight text-black">
+        <p className="mt-30 max-w-[800px] text-base leading-tight font-light tracking-tight text-black sm:text-2xl md:text-4xl lg:text-[64px]">
           Strategic product design agency for startups looking to raise their
           series A / B funding
         </p>
