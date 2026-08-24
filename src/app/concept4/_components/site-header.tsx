@@ -40,12 +40,12 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-12 text-2xl font-medium tracking-[-0.04em] text-black lg:col-start-3 lg:flex">
+        <nav className="hidden items-center gap-12 text-2xl font-medium tracking-[-0.04em] lg:col-start-3 lg:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="transition-opacity hover:opacity-60"
+              className="text-[#adadad] transition-colors hover:text-black"
             >
               {link.label}
             </Link>

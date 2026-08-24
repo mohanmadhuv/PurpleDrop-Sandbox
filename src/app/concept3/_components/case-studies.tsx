@@ -76,7 +76,9 @@ export function CaseStudies() {
             <li key={client} className="leading-[1.618]">
               <span
                 className={
-                  index === activeIndex ? "text-black" : "text-[#adadad]"
+                  index === activeIndex
+                    ? "text-black transition-colors"
+                    : "text-[#adadad] transition-colors hover:text-black"
                 }
               >
                 {client}
