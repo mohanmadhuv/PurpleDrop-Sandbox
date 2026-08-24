@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
 
+import { pillTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 const concepts = [
@@ -36,8 +37,8 @@ export function ConceptSwitcher() {
             {isActive && (
               <motion.span
                 layoutId="concept-switcher-pill"
-                className="absolute inset-0 rounded-full bg-[#3b2577]"
-                transition={{ type: "spring", stiffness: 500, damping: 36 }}
+                className="absolute inset-0 rounded-full bg-brand"
+                transition={pillTransition}
               />
             )}
             <span className="relative z-10">{concept.label}</span>

@@ -2,6 +2,8 @@
 
 import { motion } from "motion/react";
 
+import { cardReveal } from "@/lib/motion";
+
 type Project = {
   client: string;
   service: string;
@@ -49,23 +51,17 @@ const columnTwo: Project[] = [
 
 function ProjectCard({ client, service, year, aspect }: Project) {
   return (
-    <motion.div
-      className="flex w-full flex-col gap-2"
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-    >
+    <motion.div className="flex w-full flex-col gap-2" {...cardReveal}>
       <div
-        className="w-full rounded-sm bg-[#d9d9d9]"
+        className="placeholder-block w-full"
         style={{ aspectRatio: aspect }}
       />
-      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-base leading-[1.2] tracking-[-0.02em] sm:text-lg md:text-xl lg:text-2xl lg:tracking-[-0.04em]">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-base leading-tight tracking-tight sm:text-lg md:text-xl lg:text-2xl lg:tracking-tighter">
         <div className="flex flex-wrap items-baseline gap-x-2">
-          <span className="font-medium text-[#adadad]">{client}</span>
+          <span className="font-medium text-muted-text">{client}</span>
           <span className="font-normal text-black">{service}</span>
         </div>
-        <span className="shrink-0 font-medium text-[#adadad]">{year}</span>
+        <span className="shrink-0 font-medium text-muted-text">{year}</span>
       </div>
     </motion.div>
   );

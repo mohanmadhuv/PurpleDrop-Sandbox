@@ -10,6 +10,17 @@
   --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
   --font-heading: var(--font-sans);
+
+  /* PurpleDrop brand tokens — single source of truth for all four
+     concepts. Reference these (not raw hex/arbitrary values) from
+     any concept's components. */
+  --color-brand: var(--pd-brand);
+  --color-muted-text: var(--pd-muted-text);
+  --color-placeholder: var(--pd-placeholder);
+  --tracking-tight: var(--pd-tracking-tight);
+  --tracking-tighter: var(--pd-tracking-tighter);
+  --leading-tight: var(--pd-leading-tight);
+  --leading-golden: var(--pd-leading-golden);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -49,6 +60,15 @@
 }
 
 :root {
+  /* PurpleDrop brand tokens (raw values) */
+  --pd-brand: #3b2577; /* wordmark, logo, active pill */
+  --pd-muted-text: #adadad; /* secondary text: nav at rest, years, inactive items */
+  --pd-placeholder: #d9d9d9; /* project image placeholder blocks */
+  --pd-tracking-tight: -0.02em; /* body-scale headings, wordmark */
+  --pd-tracking-tighter: -0.04em; /* large-scale headings, nav, card labels */
+  --pd-leading-tight: 1.2; /* hero statement, card label rows */
+  --pd-leading-golden: 1.618; /* golden-ratio list spacing (concept3) */
+
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -127,4 +147,36 @@
   html {
     @apply font-sans;
   }
+}
+
+/* PurpleDrop layout utilities — the two page-margin scales reused
+   across concepts. "wide" is concept3/4's spacious 24→80→160px
+   side margin and 24→40→80px top margin; concept1/2's flat 24px
+   margin is just plain px-6/pt-6, no utility needed. */
+@utility page-px-wide {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  @variant md {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+  @variant lg {
+    padding-left: 10rem;
+    padding-right: 10rem;
+  }
+}
+
+@utility page-pt-wide {
+  padding-top: 1.5rem;
+  @variant md {
+    padding-top: 2.5rem;
+  }
+  @variant lg {
+    padding-top: 5rem;
+  }
+}
+
+@utility placeholder-block {
+  background-color: var(--color-placeholder);
+  border-radius: var(--radius-sm);
 }

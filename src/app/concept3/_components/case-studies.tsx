@@ -45,7 +45,7 @@ export function CaseStudies() {
 
   return (
     <div className="lg:grid lg:grid-cols-[auto_1fr] lg:items-start lg:gap-x-16">
-      <div className="flex flex-col px-6 pt-6 md:px-20 md:pt-10 lg:sticky lg:top-0 lg:h-screen lg:justify-between lg:px-40 lg:py-10">
+      <div className="page-px-wide flex flex-col pt-6 md:pt-10 lg:sticky lg:top-0 lg:h-screen lg:justify-between lg:py-10">
         <div>
           <Link href="/concept3" className="flex w-fit shrink-0 items-center gap-3">
             <Image
@@ -56,29 +56,26 @@ export function CaseStudies() {
               className="h-[29px] w-[54px]"
               priority
             />
-            <span
-              className="text-2xl leading-none tracking-[-0.02em]"
-              style={{ color: "#3b2577" }}
-            >
+            <span className="text-2xl leading-none tracking-tight text-brand">
               <span className="font-bold">Purple</span>
               <span className="font-light">Drop</span>
             </span>
           </Link>
 
-          <p className="mt-10 max-w-[420px] text-2xl leading-[1.2] font-normal tracking-[-0.02em] text-black sm:text-3xl lg:tracking-[-0.04em]">
+          <p className="mt-10 max-w-[420px] text-2xl leading-tight font-normal tracking-tight text-black sm:text-3xl lg:tracking-tighter">
             Strategic product design agency for startups looking to raise
             their series A / B funding
           </p>
         </div>
 
-        <ul className="mt-10 flex flex-col text-2xl font-medium tracking-[-0.04em] lg:mt-0">
+        <ul className="mt-10 flex flex-col text-2xl font-medium tracking-tighter lg:mt-0">
           {clients.map((client, index) => (
-            <li key={client} className="leading-[1.618]">
+            <li key={client} className="leading-golden">
               <span
                 className={
                   index === activeIndex
                     ? "text-black transition-colors"
-                    : "text-[#adadad] transition-colors hover:text-black"
+                    : "text-muted-text transition-colors hover:text-black"
                 }
               >
                 {client}
@@ -95,9 +92,9 @@ export function CaseStudies() {
               ref={(el) => {
                 imageRefs.current[index] = el;
               }}
-              className="aspect-[4/3] w-full rounded-sm bg-[#d9d9d9] lg:aspect-video"
+              className="placeholder-block aspect-[4/3] w-full lg:aspect-video"
             />
-            <span className="text-lg font-medium tracking-[-0.02em] text-[#adadad] lg:hidden">
+            <span className="text-lg font-medium tracking-tight text-muted-text lg:hidden">
               {client}
             </span>
           </div>

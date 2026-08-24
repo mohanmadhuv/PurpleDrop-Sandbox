@@ -6,8 +6,8 @@ export default function Concept4Page() {
     <div className="flex flex-1 flex-col bg-white">
       <SiteHeader />
 
-      <section className="w-full px-6 md:px-20 lg:px-40">
-        <p className="mt-30 max-w-[540px] text-2xl leading-[1.2] font-normal tracking-[-0.02em] text-black sm:text-3xl lg:tracking-[-0.04em]">
+      <section className="page-px-wide w-full">
+        <p className="mt-30 max-w-[540px] text-2xl leading-tight font-normal tracking-tight text-black sm:text-3xl lg:tracking-tighter">
           Strategic product design agency for startups looking to raise their
           series A / B funding
         </p>

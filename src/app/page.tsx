@@ -10,7 +10,7 @@ const concepts = [
 export default function Home() {
   return (
     <div className="flex flex-1 flex-col items-center justify-center px-6 py-24">
-      <h1 className="text-2xl font-medium tracking-[-0.02em] text-black">
+      <h1 className="text-2xl font-medium tracking-tight text-black">
         PurpleDrop — Concepts
       </h1>
       <nav className="mt-8 flex flex-col gap-3">

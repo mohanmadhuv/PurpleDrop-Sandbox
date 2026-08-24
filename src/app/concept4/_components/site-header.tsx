@@ -20,7 +20,7 @@ const navLinks = [
 
 export function SiteHeader() {
   return (
-    <header className="w-full px-6 pt-6 md:px-20 md:pt-10 lg:px-40 lg:pt-20">
+    <header className="page-px-wide page-pt-wide w-full">
       <div className="flex items-center justify-between gap-6 lg:grid lg:grid-cols-3 lg:items-start">
         <Link href="/concept4" className="flex shrink-0 items-center gap-3">
           <Image
@@ -31,21 +31,18 @@ export function SiteHeader() {
             className="h-[29px] w-[54px]"
             priority
           />
-          <span
-            className="text-2xl leading-none tracking-[-0.02em]"
-            style={{ color: "#3b2577" }}
-          >
+          <span className="text-2xl leading-none tracking-tight text-brand">
             <span className="font-bold">Purple</span>
             <span className="font-light">Drop</span>
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-12 text-2xl font-medium tracking-[-0.04em] lg:col-start-3 lg:flex">
+        <nav className="hidden items-center gap-12 text-2xl font-medium tracking-tighter lg:col-start-3 lg:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-[#adadad] transition-colors hover:text-black"
+              className="text-muted-text transition-colors hover:text-black"
             >
               {link.label}
             </Link>
