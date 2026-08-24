@@ -149,31 +149,17 @@
   }
 }
 
-/* PurpleDrop layout utilities — the two page-margin scales reused
-   across concepts. "wide" is concept3/4's spacious 24→80→160px
-   side margin and 24→40→80px top margin; concept1/2's flat 24px
-   margin is just plain px-6/pt-6, no utility needed. */
+/* PurpleDrop layout utilities — the spacious page-margin scale
+   reused across concepts (concept3/4's 160px side margin, 80px top
+   margin). Fixed at its desktop value on every viewport — no
+   responsive variation anywhere on this site except the logo. */
 @utility page-px-wide {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  @variant md {
-    padding-left: 5rem;
-    padding-right: 5rem;
-  }
-  @variant lg {
-    padding-left: 10rem;
-    padding-right: 10rem;
-  }
+  padding-left: 10rem;
+  padding-right: 10rem;
 }
 
 @utility page-pt-wide {
-  padding-top: 1.5rem;
-  @variant md {
-    padding-top: 2.5rem;
-  }
-  @variant lg {
-    padding-top: 5rem;
-  }
+  padding-top: 5rem;
 }
 
 @utility placeholder-block {

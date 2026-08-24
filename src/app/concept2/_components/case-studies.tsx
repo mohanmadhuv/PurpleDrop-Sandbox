@@ -31,7 +31,7 @@ export function CaseStudies() {
 
   return (
     <div className="lg:grid lg:grid-cols-[auto_1fr] lg:items-start lg:gap-x-16">
-      <div className="page-px-wide flex flex-col pt-6 md:pt-10 lg:sticky lg:top-0 lg:h-screen lg:justify-between lg:py-16">
+      <div className="page-px-wide flex flex-col py-16 lg:sticky lg:top-0 lg:h-screen lg:justify-between">
         <div>
           <SiteHeader />
 
@@ -41,7 +41,7 @@ export function CaseStudies() {
           </p>
         </div>
 
-        <ul className="mt-10 flex flex-col text-base font-normal tracking-tight lg:mt-0">
+        <ul className="flex flex-col text-base font-normal tracking-tight">
           {clients.map((client, index) => (
             <li key={client} className="leading-golden">
               <span
@@ -60,7 +60,7 @@ export function CaseStudies() {
 
       <div
         id="work"
-        className="flex flex-col gap-6 px-6 py-16 md:px-20 lg:pr-20 lg:pl-0 lg:py-24"
+        className="flex flex-col gap-6 py-24 pr-20 pl-0"
       >
         {clients.map((client, index) => (
           <div key={client} className="flex flex-col gap-2">
