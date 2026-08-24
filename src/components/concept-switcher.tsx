@@ -10,7 +10,8 @@ import { cn } from "@/lib/utils";
 const concepts = [
   { href: "/concept1a", label: "Concept 1a" },
   { href: "/concept1b", label: "Concept 1b" },
-  { href: "/concept2", label: "Concept 2" },
+  { href: "/concept2a", label: "Concept 2a" },
+  { href: "/concept2b", label: "Concept 2b" },
   { href: "/concept3a", label: "Concept 3a" },
   { href: "/concept3b", label: "Concept 3b" },
 ];

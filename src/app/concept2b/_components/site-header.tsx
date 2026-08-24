@@ -2,15 +2,15 @@ import Image from "next/image";
 import Link from "next/link";
 
 const navLinks = [
-  { href: "/concept2#work", label: "Work" },
-  { href: "/concept2/about", label: "About" },
-  { href: "/concept2/contact", label: "Contact" },
+  { href: "/concept2b#work", label: "Work" },
+  { href: "/concept2b/about", label: "About" },
+  { href: "/concept2b/contact", label: "Contact" },
 ];
 
 export function SiteHeader() {
   return (
     <div className="flex w-full max-w-[720px] items-center justify-between">
-      <Link href="/concept2" className="flex w-fit shrink-0 items-center gap-3">
+      <Link href="/concept2b" className="flex w-fit shrink-0 items-center gap-3">
         <Image
           src="/logo.svg"
           alt="PurpleDrop"

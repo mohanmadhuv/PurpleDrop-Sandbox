@@ -1,6 +1,6 @@
 import { CaseStudies } from "./_components/case-studies";
 
-export default function Concept2Page() {
+export default function Concept2APage() {
   return (
     <div className="flex flex-1 flex-col bg-white">
       <CaseStudies />
