@@ -1,17 +1,19 @@
-import Link from "next/link";
+import { SiteHeader } from "./_components/site-header";
+import { WorkSection } from "./_components/work-section";
 
 export default function Concept3BPage() {
   return (
-    <div className="flex flex-1 flex-col items-center justify-center px-6 py-24 text-center">
-      <p className="text-2xl font-medium tracking-tight text-black">
-        Concept 3b — coming soon.
-      </p>
-      <Link
-        href="/"
-        className="mt-6 text-sm font-medium text-muted-text transition-colors hover:text-black"
-      >
-        ← Back to concepts
-      </Link>
+    <div className="flex flex-1 flex-col bg-white">
+      <SiteHeader />
+
+      <section className="page-px-wide w-full">
+        <p className="mt-30 max-w-[540px] text-2xl leading-tight font-normal tracking-tight text-black sm:text-3xl lg:tracking-tighter">
+          Strategic product design agency for startups looking to raise their
+          series A / B funding
+        </p>
+      </section>
+
+      <WorkSection />
     </div>
   );
 }
