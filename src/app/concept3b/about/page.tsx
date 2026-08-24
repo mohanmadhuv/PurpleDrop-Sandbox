@@ -11,7 +11,7 @@ export default function AboutPage() {
     <div className="flex flex-1 flex-col bg-white">
       <SiteHeader />
       <section className="page-px-wide w-full">
-        <p className="mt-6 max-w-[540px] text-2xl leading-tight font-normal tracking-tight text-black sm:text-3xl lg:tracking-tighter">
+        <p className="mt-6 max-w-[540px] text-base leading-tight font-normal tracking-tight text-black">
           About page coming soon.
         </p>
       </section>

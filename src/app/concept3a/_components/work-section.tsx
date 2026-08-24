@@ -14,7 +14,7 @@ function ProjectCard({ client, service, year, aspect }: Project) {
         className="placeholder-block w-full"
         style={{ aspectRatio: aspect }}
       />
-      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-base leading-tight tracking-tight sm:text-lg md:text-xl lg:text-2xl lg:tracking-tighter">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-base leading-tight tracking-tight">
         <div className="flex flex-wrap items-baseline gap-x-2">
           <span className="font-medium text-muted-text">{client}</span>
           <span className="font-normal text-black">{service}</span>

@@ -48,13 +48,13 @@ export function CaseStudies() {
             </span>
           </Link>
 
-          <p className="mt-10 max-w-[420px] text-2xl leading-tight font-normal tracking-tight text-black sm:text-3xl lg:tracking-tighter">
+          <p className="mt-10 max-w-[420px] text-base leading-tight font-normal tracking-tight text-black">
             Strategic product design agency for startups looking to raise
             their series A / B funding
           </p>
         </div>
 
-        <ul className="mt-10 flex flex-col text-2xl font-medium tracking-tighter lg:mt-0">
+        <ul className="mt-10 flex flex-col text-base font-medium tracking-tight lg:mt-0">
           {clients.map((client, index) => (
             <li key={client} className="leading-golden">
               <span
@@ -83,7 +83,7 @@ export function CaseStudies() {
               }}
               className="placeholder-block aspect-[4/3] w-full lg:aspect-video"
             />
-            <span className="text-lg font-medium tracking-tight text-muted-text lg:hidden">
+            <span className="text-base font-medium tracking-tight text-muted-text lg:hidden">
               {client}
             </span>
           </div>

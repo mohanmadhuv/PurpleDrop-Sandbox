@@ -7,7 +7,7 @@ export default function Concept3BPage() {
       <SiteHeader />
 
       <section className="page-px-wide w-full">
-        <p className="mt-30 max-w-[540px] text-2xl leading-tight font-normal tracking-tight text-black sm:text-3xl lg:tracking-tighter">
+        <p className="mt-30 max-w-[540px] text-base leading-tight font-normal tracking-tight text-black">
           Strategic product design agency for startups looking to raise their
           series A / B funding
         </p>
