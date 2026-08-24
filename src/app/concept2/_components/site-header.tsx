@@ -21,7 +21,7 @@ const navLinks = [
 export function SiteHeader() {
   return (
     <header className="w-full px-6 pt-6">
-      <div className="flex items-center justify-between gap-6 lg:grid lg:grid-cols-2 lg:items-start">
+      <div className="flex items-center justify-between gap-6 lg:grid lg:grid-cols-3 lg:items-start">
         <Link href="/concept2" className="flex shrink-0 items-center gap-3">
           <Image
             src="/logo.svg"
@@ -40,7 +40,7 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-12 text-2xl font-medium tracking-[-0.04em] text-black lg:flex">
+        <nav className="hidden items-center gap-12 text-2xl font-medium tracking-[-0.04em] text-black lg:col-start-3 lg:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
