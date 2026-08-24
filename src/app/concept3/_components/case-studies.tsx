@@ -85,7 +85,10 @@ export function CaseStudies() {
         </ul>
       </div>
 
-      <div id="work" className="flex flex-col gap-6 px-6 py-16 md:px-20 lg:px-0 lg:py-24">
+      <div
+        id="work"
+        className="flex flex-col gap-6 px-6 py-16 md:px-20 lg:pr-20 lg:pl-0 lg:py-24"
+      >
         {clients.map((client, index) => (
           <div key={client} className="flex flex-col gap-2">
             <div
