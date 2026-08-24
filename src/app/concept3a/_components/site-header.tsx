@@ -13,16 +13,16 @@ import {
 } from "@/components/ui/sheet";
 
 const navLinks = [
-  { href: "/concept2#work", label: "Work" },
-  { href: "/concept2/about", label: "About" },
-  { href: "/concept2/contact", label: "Contact" },
+  { href: "/concept3a#work", label: "Work" },
+  { href: "/concept3a/about", label: "About" },
+  { href: "/concept3a/contact", label: "Contact" },
 ];
 
 export function SiteHeader() {
   return (
-    <header className="w-full px-6 pt-6">
+    <header className="page-px-wide page-pt-wide w-full">
       <div className="flex items-center justify-between gap-6 lg:grid lg:grid-cols-3 lg:items-start">
-        <Link href="/concept2" className="flex shrink-0 items-center gap-3">
+        <Link href="/concept3a" className="flex shrink-0 items-center gap-3">
           <Image
             src="/logo.svg"
             alt="PurpleDrop"
