@@ -1,19 +1,20 @@
-import { SiteHeader } from "@/components/site-header";
-import { WorkSection } from "@/components/work-section";
+import type { Metadata } from "next";
 
-export default function Home() {
+import { SiteHeader } from "@/components/site-header";
+
+export const metadata: Metadata = {
+  title: "Contact — PurpleDrop",
+};
+
+export default function ContactPage() {
   return (
     <div className="flex flex-1 flex-col bg-white">
       <SiteHeader />
-
       <section className="mx-auto w-full max-w-[1392px] px-6">
         <p className="mt-10 max-w-[800px] text-2xl leading-[1.2] font-normal tracking-[-0.02em] text-black sm:text-3xl md:text-4xl lg:mt-[120px] lg:text-[40px] lg:tracking-[-0.04em]">
-          Strategic product design agency for startups looking to raise their
-          series A / B funding
+          Contact page coming soon.
         </p>
       </section>
-
-      <WorkSection />
     </div>
   );
 }
