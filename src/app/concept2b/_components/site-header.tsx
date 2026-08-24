@@ -10,19 +10,15 @@ const navLinks = [
 export function SiteHeader() {
   return (
     <div className="flex w-full max-w-[720px] items-center justify-between">
-      <Link href="/concept2b" className="flex w-fit shrink-0 items-center gap-3">
+      <Link href="/concept2b" className="flex w-fit shrink-0 items-center">
         <Image
           src="/logo.svg"
           alt="PurpleDrop"
-          width={54}
-          height={29}
-          className="h-[29px] w-[54px]"
+          width={108}
+          height={16}
+          className="h-4 w-auto"
           priority
         />
-        <span className="text-2xl leading-none tracking-tight text-brand">
-          <span className="font-bold">Purple</span>
-          <span className="font-light">Drop</span>
-        </span>
       </Link>
 
       <nav className="flex items-center gap-8 text-base font-normal tracking-tight">

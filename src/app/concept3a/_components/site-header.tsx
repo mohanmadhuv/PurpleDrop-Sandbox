@@ -22,19 +22,15 @@ export function SiteHeader() {
   return (
     <header className="page-px-wide page-pt-wide w-full">
       <div className="flex items-center justify-between gap-6 lg:grid lg:grid-cols-3 lg:items-start">
-        <Link href="/concept3a" className="flex shrink-0 items-center gap-3">
+        <Link href="/concept3a" className="flex w-fit shrink-0 items-center">
           <Image
             src="/logo.svg"
             alt="PurpleDrop"
-            width={54}
-            height={29}
-            className="h-[29px] w-[54px]"
+            width={108}
+            height={16}
+            className="h-4 w-auto"
             priority
           />
-          <span className="text-2xl leading-none tracking-tight text-brand">
-            <span className="font-bold">Purple</span>
-            <span className="font-light">Drop</span>
-          </span>
         </Link>
 
         <nav className="hidden items-center justify-end gap-8 text-base font-normal tracking-tight lg:col-start-3 lg:flex">
