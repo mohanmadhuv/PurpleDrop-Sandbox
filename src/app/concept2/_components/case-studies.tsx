@@ -31,7 +31,7 @@ export function CaseStudies() {
 
   return (
     <div className="lg:grid lg:grid-cols-[auto_1fr] lg:items-start lg:gap-x-16">
-      <div className="page-px-wide flex flex-col pt-6 md:pt-10 lg:sticky lg:top-0 lg:h-screen lg:justify-between lg:py-10">
+      <div className="page-px-wide flex flex-col pt-6 md:pt-10 lg:sticky lg:top-0 lg:h-screen lg:justify-between lg:py-16">
         <div>
           <Link href="/concept2" className="flex w-fit shrink-0 items-center gap-3">
             <Image
