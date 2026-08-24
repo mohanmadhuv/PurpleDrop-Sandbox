@@ -21,14 +21,14 @@ const navLinks = [
 export function SiteHeader() {
   return (
     <header className="w-full px-6 pt-6">
-      <div className="flex items-center justify-between gap-6 lg:grid lg:grid-cols-3 lg:items-start">
+      <div className="flex items-center justify-between gap-6 lg:grid lg:grid-cols-3 lg:items-center">
         <Link href="/concept1b" className="flex w-fit shrink-0 items-center">
           <Image
-            src="/logo.svg"
+            src="/logo-mark.png"
             alt="PurpleDrop"
-            width={108}
-            height={16}
-            className="h-4 w-auto"
+            width={55}
+            height={29}
+            className="h-6 w-auto"
             priority
           />
         </Link>
