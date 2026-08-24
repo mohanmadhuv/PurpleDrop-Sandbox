@@ -14,6 +14,10 @@ export function CaseStudies() {
 
   return (
     <div className="relative min-h-screen w-full">
+      {/* Panel spans from the content container's right edge (160px
+          page-px-wide margin + 720px content width) to the viewport's
+          right edge, full height. Keep left-[880px] in sync if either
+          value changes. */}
       <AnimatePresence>
         {activeClient && (
           <motion.div
@@ -22,7 +26,7 @@ export function CaseStudies() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="placeholder-block fixed inset-0 z-0"
+            className="placeholder-block fixed top-0 right-0 bottom-0 left-[880px] z-0"
           />
         )}
       </AnimatePresence>
