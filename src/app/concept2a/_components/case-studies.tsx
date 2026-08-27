@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 
-import { clientRoster as clients, getProjectImage, getProjectVideo } from "@/lib/projects";
+import { displayProjects } from "@/lib/projects";
 import { cn } from "@/lib/utils";
 import { MobileWorkList } from "@/components/mobile-work-list";
 
@@ -12,9 +12,10 @@ import { SiteHeader } from "./site-header";
 
 export function CaseStudies() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const activeClient = activeIndex !== null ? clients[activeIndex] : null;
-  const activeVideo = activeClient ? getProjectVideo(activeClient) : undefined;
-  const activeImage = activeClient ? getProjectImage(activeClient) : undefined;
+  const activeProject = activeIndex !== null ? displayProjects[activeIndex] : null;
+  const activeClient = activeProject?.client ?? null;
+  const activeVideo = activeProject?.video;
+  const activeImage = activeProject?.image;
 
   return (
     <div className="relative min-h-screen w-full">
@@ -74,8 +75,8 @@ export function CaseStudies() {
           className="fixed bottom-16 left-40 z-10 hidden flex-col text-base font-normal tracking-tight lg:flex"
           onMouseLeave={() => setActiveIndex(null)}
         >
-          {clients.map((client, index) => (
-            <li key={client} className="leading-golden">
+          {displayProjects.map((project, index) => (
+            <li key={project.client} className="leading-golden">
               <button
                 type="button"
                 onMouseEnter={() => setActiveIndex(index)}
@@ -88,7 +89,7 @@ export function CaseStudies() {
                     : "text-muted-text hover:text-black"
                 )}
               >
-                {client}
+                {project.client}
               </button>
             </li>
           ))}

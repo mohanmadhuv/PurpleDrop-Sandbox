@@ -1,9 +1,9 @@
 "use client";
 
-import { distributeColumns, projects } from "@/lib/projects";
+import { displayProjects, distributeColumns } from "@/lib/projects";
 import { ProjectCard } from "@/components/project-card";
 
-const [columnOne, columnTwo, columnThree] = distributeColumns(projects, 3);
+const [columnOne, columnTwo, columnThree] = distributeColumns(displayProjects, 3);
 
 export function WorkSection() {
   return (

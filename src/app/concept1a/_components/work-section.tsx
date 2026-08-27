@@ -1,11 +1,11 @@
 "use client";
 
-import { distributeColumns, projects } from "@/lib/projects";
+import { displayProjects, distributeColumns } from "@/lib/projects";
 import { ProjectCard } from "@/components/project-card";
 
 import { getConcept1aAspect } from "../_lib/card-sizes";
 
-const sizedProjects = projects.map((project) => ({
+const sizedProjects = displayProjects.map((project) => ({
   ...project,
   aspect: getConcept1aAspect(project.client, project.aspect),
 }));
