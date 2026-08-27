@@ -20,35 +20,43 @@ const concepts = [
 
 const expandTransition = { type: "spring", stiffness: 420, damping: 34, bounce: 0 } as const;
 
-function useNaturalWidth<T extends HTMLElement>() {
+function useNaturalSize<T extends HTMLElement>() {
   const ref = useRef<T>(null);
-  const [width, setWidth] = useState<number>();
+  const [size, setSize] = useState<{ width: number; height: number }>();
 
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const observer = new ResizeObserver(() => setWidth(el.getBoundingClientRect().width));
+    const measure = () => {
+      const rect = el.getBoundingClientRect();
+      setSize({ width: rect.width, height: rect.height });
+    };
+    const observer = new ResizeObserver(measure);
     observer.observe(el);
-    setWidth(el.getBoundingClientRect().width);
+    measure();
     return () => observer.disconnect();
   }, []);
 
-  return [ref, width] as const;
+  return [ref, size] as const;
 }
 
-// The tabs row is absolutely positioned (so its natural width can be measured
-// unconstrained), which means it sits outside nav's own border+padding box.
-// This measures that inset once so it can be added back on both sides,
-// keeping the right gutter equal to the left instead of getting clipped.
+// The dots/tabs rows are absolutely positioned (so their natural size can be
+// measured unconstrained), which means they sit outside nav's own
+// border+padding box. This measures that inset once so it can be added back
+// on every side when sizing nav, instead of only being honored on the side
+// the content happens to be anchored to.
 function useEdgeInset<T extends HTMLElement>() {
   const ref = useRef<T>(null);
-  const [inset, setInset] = useState(0);
+  const [inset, setInset] = useState({ x: 0, y: 0 });
 
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
     const style = getComputedStyle(el);
-    setInset(parseFloat(style.borderLeftWidth) + parseFloat(style.paddingLeft));
+    setInset({
+      x: parseFloat(style.borderLeftWidth) + parseFloat(style.paddingLeft),
+      y: parseFloat(style.borderTopWidth) + parseFloat(style.paddingTop),
+    });
   }, []);
 
   return [ref, inset] as const;
@@ -60,25 +68,30 @@ export function ConceptSwitcher() {
   const [isOpen, setIsOpen] = useState(false);
 
   const [navRef, edgeInset] = useEdgeInset<HTMLElement>();
-  const [dotsRef, dotsWidth] = useNaturalWidth<HTMLDivElement>();
-  const [tabsRef, tabsWidth] = useNaturalWidth<HTMLDivElement>();
-  const width = isOpen ? (tabsWidth !== undefined ? tabsWidth + edgeInset * 2 : undefined) : dotsWidth;
+  const [dotsRef, dotsSize] = useNaturalSize<HTMLDivElement>();
+  const [tabsRef, tabsSize] = useNaturalSize<HTMLDivElement>();
+
+  const activeSize = isOpen ? tabsSize : dotsSize;
+  const width = activeSize ? activeSize.width + edgeInset.x * 2 : undefined;
+  const height = dotsSize && tabsSize ? Math.max(dotsSize.height, tabsSize.height) + edgeInset.y * 2 : undefined;
 
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-6 z-50 flex justify-center px-6">
       <motion.nav
         ref={navRef}
         aria-label="Switch concept"
-        animate={width ? { width } : undefined}
+        animate={width && height ? { width, height } : undefined}
         transition={expandTransition}
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
-        className="pointer-events-auto relative flex items-center overflow-hidden rounded-full border border-black/10 bg-white/90 p-1 shadow-lg backdrop-blur-sm"
+        className="pointer-events-auto relative overflow-hidden rounded-full border border-black/10 bg-white/90 p-1 shadow-lg backdrop-blur-sm"
       >
+        {/* Centered (not left-anchored) so the visible content stays centered
+            in nav's box for the entire width transition, not just at rest. */}
         <div
           ref={dotsRef}
           className={cn(
-            "flex shrink-0 items-center justify-center px-4 py-2 transition-opacity duration-150",
+            "absolute top-1/2 left-1/2 flex shrink-0 -translate-x-1/2 -translate-y-1/2 items-center justify-center px-4 py-2 transition-opacity duration-150",
             isOpen ? "pointer-events-none opacity-0" : "opacity-100"
           )}
         >
@@ -89,7 +102,7 @@ export function ConceptSwitcher() {
         <div
           ref={tabsRef}
           className={cn(
-            "absolute inset-y-1 left-1 flex shrink-0 items-center gap-1 transition-opacity duration-150",
+            "absolute top-1/2 left-1/2 flex shrink-0 -translate-x-1/2 -translate-y-1/2 items-center gap-1 transition-opacity duration-150",
             isOpen ? "opacity-100" : "pointer-events-none opacity-0"
           )}
         >

@@ -1,29 +1,16 @@
 "use client";
 
-import { motion } from "motion/react";
+import { distributeColumns, projects } from "@/lib/projects";
+import { ProjectCard } from "@/components/project-card";
 
-import { cardReveal } from "@/lib/motion";
-import { distributeColumns, projects, type Project } from "@/lib/projects";
+import { getConcept3bAspect } from "../_lib/card-sizes";
 
-const [columnOne, columnTwo] = distributeColumns(projects, 2);
+const sizedProjects = projects.map((project) => ({
+  ...project,
+  aspect: getConcept3bAspect(project.client, project.aspect),
+}));
 
-function ProjectCard({ client, service, year, aspect }: Project) {
-  return (
-    <motion.div className="flex w-full flex-col gap-2" {...cardReveal}>
-      <div
-        className="placeholder-block w-full"
-        style={{ aspectRatio: aspect }}
-      />
-      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-base leading-tight tracking-tight">
-        <div className="flex flex-wrap items-baseline gap-x-2">
-          <span className="font-normal text-muted-text">{client}</span>
-          <span className="font-normal text-black">{service}</span>
-        </div>
-        <span className="shrink-0 font-normal text-muted-text">{year}</span>
-      </div>
-    </motion.div>
-  );
-}
+const [columnOne, columnTwo] = distributeColumns(sizedProjects, 2);
 
 export function WorkSection() {
   return (

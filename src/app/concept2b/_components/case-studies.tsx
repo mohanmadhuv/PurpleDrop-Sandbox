@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 
-import { clientRoster as clients } from "@/lib/projects";
+import { clientRoster as clients, getProjectImage, getProjectVideo } from "@/lib/projects";
 import { cn } from "@/lib/utils";
 import { MobileWorkList } from "@/components/mobile-work-list";
 
@@ -12,6 +13,8 @@ import { SiteHeader } from "./site-header";
 export function CaseStudies() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const activeClient = activeIndex !== null ? clients[activeIndex] : null;
+  const activeVideo = activeClient ? getProjectVideo(activeClient) : undefined;
+  const activeImage = activeClient ? getProjectImage(activeClient) : undefined;
 
   return (
     <div className="relative min-h-screen w-full">
@@ -28,8 +31,33 @@ export function CaseStudies() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="placeholder-block fixed top-0 bottom-0 left-0 right-[852px] z-0 hidden lg:block"
-          />
+            className={cn(
+              "fixed top-0 bottom-0 left-0 right-[852px] z-0 hidden overflow-hidden lg:block",
+              !activeVideo && !activeImage && "placeholder-block"
+            )}
+          >
+            {activeVideo ? (
+              <video
+                key={activeVideo}
+                src={activeVideo}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            ) : (
+              activeImage && (
+                <Image
+                  src={activeImage}
+                  alt={activeClient}
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 1024px) 40vw, 0px"
+                />
+              )
+            )}
+          </motion.div>
         )}
       </AnimatePresence>
 
