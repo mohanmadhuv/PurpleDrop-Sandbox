@@ -3,11 +3,11 @@
 import { displayProjects, distributeColumns } from "@/lib/projects";
 import { ProjectCard } from "@/components/project-card";
 
-import { getConcept3bAspect } from "../_lib/card-sizes";
+import { getCardAspect } from "../_lib/card-sizes";
 
 const sizedProjects = displayProjects.map((project) => ({
   ...project,
-  aspect: getConcept3bAspect(project.client, project.aspect),
+  aspect: getCardAspect(project.client, project.aspect),
 }));
 
 const [columnOne, columnTwo] = distributeColumns(sizedProjects, 2);

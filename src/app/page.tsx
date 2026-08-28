@@ -1,31 +1,19 @@
-import Link from "next/link";
-
-const concepts = [
-  { href: "/concept1a", label: "Concept 1a" },
-  { href: "/concept1b", label: "Concept 1b" },
-  { href: "/concept2a", label: "Concept 2a" },
-  { href: "/concept2b", label: "Concept 2b" },
-  { href: "/concept3a", label: "Concept 3a" },
-  { href: "/concept3b", label: "Concept 3b" },
-];
+import { SiteHeader } from "./_components/site-header";
+import { WorkSection } from "./_components/work-section";
 
 export default function Home() {
   return (
-    <div className="flex flex-1 flex-col items-center justify-center px-6 py-24">
-      <h1 className="text-2xl font-medium tracking-tight text-black">
-        PurpleDrop — Concepts
-      </h1>
-      <nav className="mt-8 flex flex-col gap-3">
-        {concepts.map((concept) => (
-          <Link
-            key={concept.href}
-            href={concept.href}
-            className="rounded-md border border-border px-6 py-3 text-center text-lg font-medium text-black transition-colors hover:bg-muted"
-          >
-            {concept.label}
-          </Link>
-        ))}
-      </nav>
+    <div className="flex flex-1 flex-col bg-white">
+      <SiteHeader />
+
+      <section className="page-px-wide w-full">
+        <p className="mt-30 max-w-[800px] text-[32px] leading-tight font-light tracking-tight text-black">
+          Purpledrop is a product design partner for startups.
+          We specialize in operational interfaces and design systems for AI-native products.
+        </p>
+      </section>
+
+      <WorkSection />
     </div>
   );
 }

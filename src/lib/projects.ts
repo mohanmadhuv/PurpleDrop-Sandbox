@@ -20,8 +20,6 @@ export type Project = {
  * just names) from this array instead.
  */
 export const projects: Project[] = [
-  { client: "Porsche", service: "Digital Innovation", year: "2011", aspect: 684 / 720 },
-  { client: "Ford", service: "Product Design", year: "2021", aspect: 684 / 960 },
   {
     client: "Pratilipi",
     service: "Product Design",
@@ -29,7 +27,6 @@ export const projects: Project[] = [
     aspect: 866 / 1278,
     image: "/work/pratilipi/hero.png",
   },
-  { client: "Adidas", service: "Product Design", year: "2022", aspect: 684 / 520 },
   { client: "SuperTrash", service: "Product Design", year: "2022", aspect: 684 / 520 },
   {
     client: "Exact Centaur",
@@ -37,7 +34,6 @@ export const projects: Project[] = [
     year: "2023",
     aspect: 684 / 520,
   },
-  { client: "Philips", service: "Product Design", year: "2023", aspect: 684 / 720 },
   {
     client: "Swydo",
     service: "User Research, Product Design",
@@ -52,22 +48,27 @@ export const projects: Project[] = [
     aspect: 684 / 520,
     image: "/work/liveflow/hero.png",
   },
-  { client: "MessageBird", service: "Product Design", year: "2025", aspect: 684 / 960 },
+  { client: "Bird (YC S16)", service: "Product Design", year: "2025", aspect: 684 / 960 },
   {
     client: "Msasa",
     service: "User Interface Design, Prototyping",
     year: "2026",
     aspect: 684 / 576,
   },
-  { client: "Lexhub", service: "Design System", year: "2026", aspect: 684 / 520 },
+  {
+    client: "Lexhub",
+    service: "Design System",
+    year: "2026",
+    aspect: 684 / 520,
+    image: "/work/lexhub/hero-2.png",
+  },
 ];
 
 /**
- * Today's site-wide display order (newest first) — every concept's
- * work grid and concept2's editorial list render this, not `projects`
- * directly. Change this export (not the ledger itself) to change what
- * order projects are displayed in; keep the ledger in true
- * chronological order regardless.
+ * Today's site-wide display order (newest first) — the work grid
+ * renders this, not `projects` directly. Change this export (not the
+ * ledger itself) to change what order projects are displayed in; keep
+ * the ledger in true chronological order regardless.
  */
 export const displayProjects: Project[] = [...projects].reverse();
 

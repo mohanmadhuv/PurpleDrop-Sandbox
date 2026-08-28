@@ -6,7 +6,7 @@
  * produces it — this keeps a fluid grid to a small, deliberate set of
  * proportions instead of one-off ratios per project.
  *
- * This scale is tuned for concept1a's 2-column grid. A concept with a
+ * This scale is tuned for the work grid's 2-column layout. A layout with a
  * different column count/width (and so a different rhythm) should define
  * its own scale the same way rather than reusing these exact numbers.
  */
