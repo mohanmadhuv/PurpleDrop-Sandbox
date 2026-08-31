@@ -6,9 +6,3 @@ export const cardReveal = {
   viewport: { once: true, margin: "-80px" },
   transition: { duration: 0.5, ease: easeOut },
 } as const;
-
-export const pillTransition = {
-  type: "spring",
-  stiffness: 500,
-  damping: 36,
-} as const;

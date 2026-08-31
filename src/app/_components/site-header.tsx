@@ -33,12 +33,12 @@ export function SiteHeader() {
           />
         </Link>
 
-        <nav className="hidden items-center justify-end gap-8 text-base font-normal tracking-tight lg:col-start-2 lg:flex">
+        <nav className="hidden items-center justify-end gap-8 lg:col-start-2 lg:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-muted-text transition-colors hover:text-black"
+              className="p1-gray transition-colors hover:text-black"
             >
               {link.label}
             </Link>
@@ -69,7 +69,7 @@ export function SiteHeader() {
                   render={
                     <Link
                       href={link.href}
-                      className="rounded-md px-2 py-2.5 text-base font-normal text-black transition-colors hover:bg-muted"
+                      className="p1-black rounded-md px-2 py-2.5 transition-colors hover:bg-muted"
                     />
                   }
                 >

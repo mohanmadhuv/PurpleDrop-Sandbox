@@ -83,6 +83,10 @@ export const displayProjects: Project[] = [...projects].reverse();
  * Splits a list into `columns` groups round-robin (item i goes to
  * column i % columns), so a masonry grid can go from N to M columns
  * by changing one number instead of re-authoring the project list.
+ * Only meaningful once cards are laid out as independent per-column
+ * stacks (see WorkSection) — a single CSS grid would force every card
+ * in a row to match its tallest neighbor instead of packing to its
+ * own height.
  */
 export function distributeColumns<T>(items: T[], columns: number): T[][] {
   const result: T[][] = Array.from({ length: columns }, () => []);

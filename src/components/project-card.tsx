@@ -14,7 +14,16 @@ import type { Project } from "@/lib/projects";
  * lib/projects.ts shows up everywhere at once. Renders the placeholder
  * block until a project has an `image` or `video`.
  */
-export function ProjectCard({ client, service, year, aspect, image, video, poster }: Project) {
+export function ProjectCard({
+  client,
+  service,
+  year,
+  aspect,
+  image,
+  video,
+  poster,
+  delay = 0,
+}: Project & { delay?: number }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const playVideo = () => {
@@ -29,7 +38,11 @@ export function ProjectCard({ client, service, year, aspect, image, video, poste
   };
 
   return (
-    <motion.div className="flex w-full flex-col gap-2" {...cardReveal}>
+    <motion.div
+      className="flex w-full flex-col gap-2"
+      {...cardReveal}
+      transition={{ ...cardReveal.transition, delay }}
+    >
       {video ? (
         <div
           className="placeholder-block relative w-full overflow-hidden"

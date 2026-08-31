@@ -1,7 +1,7 @@
-import { cardSizes, type CardSize } from "@/lib/card-sizes";
+import { cardSizes, type CardSize } from "@/lib/card-size-scale";
 
 /**
- * Which of the 5 card-height templates (lib/card-sizes.ts) each project
+ * Which of the 5 card-height templates (lib/card-size-scale.ts) each project
  * uses on the work grid's 2-column round-robin split.
  *
  * Lexhub, Bird, Msasa, LiveFlow, Pratilipi appear with their aspect

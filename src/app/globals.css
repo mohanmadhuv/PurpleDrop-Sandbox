@@ -11,9 +11,8 @@
   --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
   --font-heading: var(--font-sans);
 
-  /* PurpleDrop brand tokens — single source of truth for all four
-     concepts. Reference these (not raw hex/arbitrary values) from
-     any concept's components. */
+  /* PurpleDrop brand tokens — single source of truth for the design.
+     Reference these (not raw hex/arbitrary values) from components. */
   --color-brand: var(--pd-brand);
   --color-muted-text: var(--pd-muted-text);
   --color-placeholder: var(--pd-placeholder);
@@ -67,7 +66,7 @@
   --pd-tracking-tight: -0.02em; /* body-scale headings, wordmark */
   --pd-tracking-tighter: -0.04em; /* large-scale headings, nav, card labels */
   --pd-leading-tight: 1.2; /* hero statement, card label rows */
-  --pd-leading-golden: 1.618; /* golden-ratio list spacing (concept3) */
+  --pd-leading-golden: 1.618; /* golden-ratio list spacing */
 
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -103,40 +102,6 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-}
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -150,11 +115,9 @@
 }
 
 /* PurpleDrop layout utilities — the spacious page-margin scale
-   reused across concepts (concept2/3's 160px side margin, 80px top
-   margin). Mobile PWA view must be identical across every concept
-   (nav, title, single-column stacked project list), so these fall
-   back to the same 24px margin concept1a/1b use below lg, and only
-   step up to the spacious desktop values at lg. */
+   (160px side margin, 80px top margin on desktop). Mobile PWA view
+   falls back to a 24px margin below lg, and only steps up to the
+   spacious desktop values at lg. */
 @utility page-px-wide {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
@@ -174,6 +137,22 @@
 @utility placeholder-block {
   background-color: var(--color-placeholder);
   border-radius: var(--radius-sm);
+}
+
+/* PurpleDrop text styles — the only three text styles used across the
+   whole design (hero statement, p1-black, p1-gray). Every page pulls
+   copy styling from one of these instead of repeating Tailwind
+   utility strings or introducing new one-off text styles. */
+@utility text-hero-statement {
+  @apply text-[32px] leading-tight font-light tracking-tight text-black;
+}
+
+@utility p1-black {
+  @apply text-lg leading-tight font-normal tracking-tight text-black;
+}
+
+@utility p1-gray {
+  @apply text-lg leading-relaxed font-normal text-muted-text;
 }
 
 /* Hard on/off cursor blink (no fade) for the hero typewriter effect. */

@@ -8,8 +8,8 @@ export default function Home() {
       <SiteHeader />
 
       <section className="page-px-wide w-full">
-        <p className="mt-30 max-w-[800px] text-[32px] leading-tight font-light tracking-tight text-black">
-          Purpledrop, a design partner for AI-native experiences and specialized in{" "}
+        <p className="text-hero-statement mt-30 max-w-[800px]">
+          Purpledrop, a design partner for AI-native experiences, specialized in{" "}
           <TypewriterPhrases />
         </p>
       </section>

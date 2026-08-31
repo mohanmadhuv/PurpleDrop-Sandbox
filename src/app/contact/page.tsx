@@ -11,7 +11,7 @@ export default function ContactPage() {
     <div className="flex flex-1 flex-col bg-white">
       <SiteHeader />
       <section className="page-px-wide w-full">
-        <p className="mt-6 max-w-[720px] text-[32px] leading-tight font-light tracking-tight text-black">
+        <p className="text-hero-statement mt-6 max-w-[720px]">
           Contact page coming soon.
         </p>
       </section>

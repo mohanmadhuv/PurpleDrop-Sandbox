@@ -3,7 +3,7 @@
 import Typewriter from "typewriter-effect";
 import { useReducedMotion } from "motion/react";
 
-const phrases = ["agentic design systems", "prototyping concepts", "operation-heavy interfaces"];
+const phrases = ["crafting agentic design systems", "easing operation-heavy workflows", "accelerating zero to launch"];
 
 /** Cycles through `phrases` with a typewriter effect; holds on the first phrase under prefers-reduced-motion. */
 export function TypewriterPhrases() {
