@@ -46,14 +46,21 @@ export const projects: Project[] = [
     service: "Product Design, Design System",
     year: "2025",
     aspect: 684 / 520,
-    image: "/work/liveflow/hero.png",
+    image: "/work/liveflow/hero-3.png",
   },
-  { client: "Bird (YC S16)", service: "Product Design", year: "2025", aspect: 684 / 960 },
+  {
+    client: "Bird (YC S16)",
+    service: "Product Design",
+    year: "2025",
+    aspect: 684 / 960,
+    image: "/work/bird/hero.png",
+  },
   {
     client: "Msasa",
     service: "User Interface Design, Prototyping",
     year: "2026",
     aspect: 684 / 576,
+    image: "/work/msasa/hero-2.png",
   },
   {
     client: "Lexhub",

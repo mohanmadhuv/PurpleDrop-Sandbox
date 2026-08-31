@@ -4,9 +4,9 @@ import { cardSizes, type CardSize } from "@/lib/card-sizes";
  * Which of the 5 card-height templates (lib/card-sizes.ts) each project
  * uses on the work grid's 2-column round-robin split.
  *
- * Lexhub, Msasa, LiveFlow, Pratilipi appear with their aspect closest
- * to (or, for LiveFlow/Pratilipi, matching) their real screenshot/video
- * so those aren't cropped much by object-cover/-contain.
+ * Lexhub, Bird, Msasa, LiveFlow, Pratilipi appear with their aspect
+ * matching (or, for Visionplanner/SuperTrash, closest to) their real
+ * screenshot/video so those aren't cropped much by object-cover/-contain.
  */
 export const cardSizeByClient: Record<string, CardSize> = {
   Lexhub: "wide",
@@ -15,8 +15,8 @@ export const cardSizeByClient: Record<string, CardSize> = {
   SuperTrash: "tall-almostSquare",
   Pratilipi: "tall",
 
-  Msasa: "tall-almostSquare",
-  "LiveFlow (YC W21)": "wide",
+  Msasa: "wide",
+  "LiveFlow (YC W21)": "square",
   Swydo: "square",
   "Exact Centaur": "wide-almostSquare",
 };

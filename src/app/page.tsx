@@ -8,8 +8,7 @@ export default function Home() {
 
       <section className="page-px-wide w-full">
         <p className="mt-30 max-w-[800px] text-[32px] leading-tight font-light tracking-tight text-black">
-          Purpledrop is a product design partner for startups.
-          We specialize in operational interfaces and design systems for AI-native products.
+          Purpledrop is a design partner for AI-native experiences specializing in operational interfaces and design systems
         </p>
       </section>
 
