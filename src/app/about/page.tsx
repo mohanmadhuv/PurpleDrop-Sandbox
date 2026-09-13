@@ -20,7 +20,7 @@ export default function AboutPage() {
       <SiteHeader />
       <section className="page-px-wide w-full">
         <p className="text-hero-statement mt-30 max-w-[800px]">
-          We strive to craft tasteful and irresistible digital experiences.
+          We strive to craft tasteful and irresistible digital experiences for the next billion people.
         </p>
       </section>
       <section className="page-px-wide mt-16 w-full lg:mt-20">

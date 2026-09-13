@@ -37,11 +37,11 @@ export function ValuesSection() {
   return (
     <section className="page-px-wide w-full pt-20 pb-24">
       <h2 className="text-hero-statement max-w-[800px]">Our Work Helps Product Teams</h2>
-      <div className="mt-12 grid grid-cols-1 gap-x-12 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-16 grid grid-cols-1 gap-x-16 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
         {values.map((value, index) => (
           <motion.div
             key={value.title}
-            className="border-t border-border pt-6"
+            className="border-t border-border pt-4"
             {...cardReveal}
             transition={{ ...cardReveal.transition, delay: index * 0.08 }}
           >
